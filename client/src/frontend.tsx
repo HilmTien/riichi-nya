@@ -8,11 +8,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import { WebSocketProvider } from "./providers/WebSocketProvider";
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <App />
+    <WebSocketProvider url="ws://localhost:8000">
+      <App />
+    </WebSocketProvider>
   </StrictMode>
 );
 
