@@ -10,5 +10,8 @@
   "scripts": {
     "dev:server": "bun --cwd server dev",
     "dev:client": "bun --cwd client dev"
+  },
+  "dependencies": {
+    "zod": "^4.4.3"
   }
 }
