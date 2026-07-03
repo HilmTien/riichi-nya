@@ -1,38 +1,34 @@
 import { serve } from "bun";
+import { parseClientMessage } from "./lib/utils";
 
 const server = serve({
-  port: 3001,
-  routes: {
-    "/api/hello": {
-      async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
-
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
-    },
+  port: 8000,
+  fetch(req, server) {
+    // upgrade the request to a WebSocket
+    if (server.upgrade(req)) {
+      return;
+    }
+    return new Response("Upgrade failed", { status: 500 });
   },
+  websocket: {
+    message(ws, message) {
+      const messageString = typeof message === "string" ? message : new TextDecoder().decode(message);
+      const clientMessage = parseClientMessage(messageString);
+      if (!clientMessage) {
+        ws.send("Invalid message");
+        return;
+      }
 
-  development: process.env.NODE_ENV !== "production" && {
-    // Enable browser hot reloading in development
-    hmr: true,
-
-    // Echo console logs from the browser to the server
-    console: true,
+      switch (clientMessage.type) {
+        case "ping":
+          ws.send(JSON.stringify({ type: "pong", timestamp: Date.now() }));
+          break;
+      }
+    }, // a message is received
+    open(ws) {}, // a socket is opened
+    close(ws, code, message) {}, // a socket is closed
+    drain(ws) {}, // the socket is ready to receive more data
   },
 });
 
-console.log(`🚀 Server running at ${server.url}`);
+console.log(`🚀 Server listening at ${server.url}`);
