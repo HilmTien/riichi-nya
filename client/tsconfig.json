@@ -23,7 +23,7 @@
     "noImplicitOverride": true,
 
     "paths": {
-      "@/*": ["./client/src/*"]
+      "@/*": ["./src/*"]
     },
 
     // Some stricter flags (disabled by default)
