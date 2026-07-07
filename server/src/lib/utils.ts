@@ -5,12 +5,12 @@ export const parseClientMessage = (data: string): ClientMessage | null => {
     const json = JSON.parse(data);
     const result = ClientMessageSchema.safeParse(json);
     if (!result.success) {
-      console.warn('Invalid client message:', result.error);
+      console.warn("Invalid client message:", result.error);
       return null;
     }
     return result.data;
   } catch {
-    console.warn('Non-JSON WebSocket message:', data);
+    console.warn("Non-JSON WebSocket message:", data);
     return null;
   }
-}
+};
