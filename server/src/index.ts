@@ -43,6 +43,7 @@ const server = serve({
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),
             callCount: timer.getCallCount(),
+            nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
           }),
         );
       };

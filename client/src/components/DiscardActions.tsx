@@ -15,6 +15,8 @@ export function DiscardActions({
 
   const discardDisabled = state.state !== "discard" || !state.hasStarted;
   const forceDiscard = discardDisabled || chiiOrPonCalled;
+  const disableRiichi = forceDiscard || state.nonMenzenchinPlayers.has(player);
+  const disableKan = forceDiscard || state.callCount[player] >= 4;
 
   return (
     <div className="flex gap-2">
@@ -37,8 +39,8 @@ export function DiscardActions({
         Tsumo
       </button>
       <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${forceDiscard ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={forceDiscard}
+        className={`rounded bg-white px-1 py-1 text-blue-500 ${disableRiichi ? "cursor-not-allowed opacity-50" : ""}`}
+        disabled={disableRiichi}
         onClick={() => {
           sendMessage({ type: "riichi", caller: player });
         }}
@@ -46,8 +48,8 @@ export function DiscardActions({
         Riichi
       </button>
       <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${forceDiscard ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={forceDiscard}
+        className={`rounded bg-white px-1 py-1 text-blue-500 ${disableKan ? "cursor-not-allowed opacity-50" : ""}`}
+        disabled={disableKan}
         onClick={() => {
           sendMessage({ type: "kan", caller: player });
           onClosedKan();

@@ -13,6 +13,7 @@ interface AppState {
   hasStarted: boolean;
   state: "call" | "discard";
   callCount: Record<Player, number>;
+  nonMenzenchinPlayers: Set<Player>;
 }
 
 export const initialState: AppState = {
@@ -36,6 +37,7 @@ export const initialState: AppState = {
     W: 0,
     N: 0,
   },
+  nonMenzenchinPlayers: new Set(),
 };
 
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
@@ -60,6 +62,7 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         hasStarted: action.hasStarted,
         state: action.state,
         callCount: action.callCount,
+        nonMenzenchinPlayers: new Set(action.nonMenzenchinPlayers),
       };
   }
 };

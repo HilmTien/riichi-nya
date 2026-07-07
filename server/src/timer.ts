@@ -81,6 +81,10 @@ export class Timer {
     return this.state;
   }
 
+  public getNonMenzenchinPlayers(): Set<"E" | "S" | "W" | "N"> {
+    return this.nonMenzenchinPlayers;
+  }
+
   public getCallCount(): Record<"E" | "S" | "W" | "N", number> {
     return this.callCount;
   }
