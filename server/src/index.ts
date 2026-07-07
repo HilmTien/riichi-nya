@@ -39,8 +39,8 @@ const server = serve({
           JSON.stringify({
             type: "state",
             currentTurn: timer.getCurrentTurn(),
-            discardTime: timer.getDiscardTime(),
-            callTime: timer.getCallTime(),
+            discardTimer: timer.getDiscardTimer(),
+            callTimer: timer.getCallTimer(),
             extraTimers: timer.getExtraTimers(),
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),
@@ -123,6 +123,8 @@ const server = serve({
         JSON.stringify({
           type: "state",
           currentTurn: timer.getCurrentTurn(),
+          discardTimer: timer.getDiscardTimer(),
+          callTimer: timer.getCallTimer(),
           extraTimers: timer.getExtraTimers(),
           hasStarted: timer.getHasStarted(),
           state: timer.getState(),
@@ -134,7 +136,7 @@ const server = serve({
       ws.send(
         JSON.stringify({
           type: "settings",
-          turnTime: timer.getTurnTime(),
+          discardTime: timer.getDiscardTime(),
           extraTime: timer.getExtraTime(),
           callTime: timer.getCallTime(),
         }),

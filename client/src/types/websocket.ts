@@ -7,8 +7,8 @@ export const ServerMessageSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("state"),
     currentTurn: z.enum(player),
-    discardTime: z.number(),
-    callTime: z.number(),
+    discardTimer: z.number(),
+    callTimer: z.number(),
     extraTimers: z.record(z.enum(player), z.number()),
     hasStarted: z.boolean(),
     state: z.enum(["call", "discard"]),
@@ -18,7 +18,7 @@ export const ServerMessageSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     type: z.literal("settings"),
-    turnTime: z.number(),
+    discardTime: z.number(),
     callTime: z.number(),
     extraTime: z.number(),
   }),

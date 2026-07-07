@@ -25,13 +25,7 @@ export function App() {
       <button onClick={() => sendMessage({ type: "start" })}>Start</button>
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
       <p>State: {state.state}</p>
-      <GlobalTimer
-        isRunning={state.hasStarted}
-        state={state.state}
-        callTime={state.callTime}
-        discardTime={state.discardTime}
-        closedKanSignal={closedKanSignal}
-      />
+      <GlobalTimer closedKanSignal={closedKanSignal} />
       <Timer
         player="E"
         extraTimers={state.extraTimers}

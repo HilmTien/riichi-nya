@@ -1,42 +1,57 @@
+import { useWebSocketContext } from "@/providers/WebSocketProvider";
 import React from "react";
 
 interface GlobalTimerProps {
-  isRunning: boolean;
-  state: "call" | "discard";
-  callTime: number;
-  discardTime: number;
   closedKanSignal: boolean;
 }
 
-export function GlobalTimer({
-  isRunning,
-  state,
-  callTime,
-  discardTime,
-  closedKanSignal,
-}: GlobalTimerProps & { callTime: number; discardTime: number }) {
-  const [timer, setTimer] = React.useState(
-    state === "call" ? callTime : discardTime,
+const decrement = (value: number) => (value > 0 ? value - 1 : 0);
+
+export function GlobalTimer({ closedKanSignal }: GlobalTimerProps) {
+  const { state } = useWebSocketContext();
+
+  const [localDiscardTimer, setLocalDiscardTimer] = React.useState(
+    state.discardTimer,
   );
+  const [localCallTimer, setLocalCallTimer] = React.useState(state.callTimer);
 
   React.useEffect(() => {
-    setTimer(state === "call" ? callTime : discardTime);
-  }, [closedKanSignal, isRunning, state, callTime, discardTime]);
-
-  React.useEffect(() => {
-    if (!isRunning) {
+    if (!state.hasStarted) {
       return;
     }
 
-    const interval = setInterval(() => {
-      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [isRunning, state]);
+    let timer;
+
+    if (state.state === "discard") {
+      timer = setInterval(() => {
+        setLocalDiscardTimer(decrement);
+      }, 1000);
+    } else {
+      timer = setInterval(() => {
+        setLocalCallTimer(decrement);
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [state.state, state.hasStarted]);
+
+  React.useEffect(() => {
+    setLocalDiscardTimer(state.discardTimer);
+    setLocalCallTimer(state.callTimer);
+  }, [state.discardTimer, state.callTimer]);
+
+  // React.useEffect(() => {
+  //   setLocalDiscardTimer(state.discardTimer);
+  // }, [state.discardTimer]);
+
+  // React.useEffect(() => {
+  //   setLocalCallTimer(state.callTimer);
+  // }, [state.callTimer]);
 
   return (
     <div>
-      <p>Global Timer: {timer}</p>
+      <p>Global Timer: {localDiscardTimer}</p>
+      <p>Call Timer: {localCallTimer}</p>
     </div>
   );
 }

@@ -65,8 +65,8 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         ...state,
         currentTurn: action.currentTurn,
         extraTimers: action.extraTimers,
-        discardTime: action.discardTime,
-        callTime: action.callTime,
+        discardTimer: action.discardTimer,
+        callTimer: action.callTimer,
         hasStarted: action.hasStarted,
         state: action.state,
         callCount: action.callCount,
@@ -76,7 +76,7 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
     case "settings":
       return {
         ...state,
-        discardTime: action.turnTime,
+        discardTime: action.discardTime,
         callTime: action.callTime,
         extraTime: action.extraTime,
       };

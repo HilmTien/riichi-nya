@@ -30,5 +30,15 @@ export const useWebSocket = (url: string) => {
     }
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      sendMessage({ type: "state" });
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [sendMessage]);
+
   return { state, sendMessage };
 };

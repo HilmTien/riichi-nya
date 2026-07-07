@@ -1,7 +1,7 @@
 const MAX_CALL_COUNT = 4;
 
 export class Timer {
-  private turnTime: number;
+  private discardTime: number;
   private callTime: number;
   private extraTime: number;
   private extraTimers: Record<"E" | "S" | "W" | "N", number>;
@@ -33,11 +33,11 @@ export class Timer {
 
   private state: "call" | "discard" = "discard";
 
-  constructor(turnTime: number, extraTime: number, callTime: number) {
-    this.turnTime = turnTime;
+  constructor(discardTime: number, extraTime: number, callTime: number) {
+    this.discardTime = discardTime;
     this.callTime = callTime;
     this.extraTime = extraTime;
-    this.discardTimer = turnTime;
+    this.discardTimer = discardTime;
     this.callTimer = callTime;
     this.extraTimers = {
       E: extraTime,
@@ -58,8 +58,6 @@ export class Timer {
     this.timer && clearTimeout(this.timer);
     this.timer && clearInterval(this.timer);
     this.timer = undefined;
-    this.discardTimer = this.turnTime;
-    this.callTimer = this.callTime;
 
     this.skipVotes.clear();
   }
@@ -71,8 +69,8 @@ export class Timer {
     return turns[nextIndex];
   }
 
-  public getTurnTime(): number {
-    return this.turnTime;
+  public getDiscardTime(): number {
+    return this.discardTime;
   }
 
   public getCallTime(): number {
@@ -87,7 +85,7 @@ export class Timer {
     return this.extraTimers;
   }
 
-  public getDiscardTime(): number {
+  public getDiscardTimer(): number {
     return this.discardTimer;
   }
 
@@ -122,6 +120,9 @@ export class Timer {
   private setCurrentTurn(turn: "E" | "S" | "W" | "N"): void {
     this.currentTurn = turn;
     this.turnUpdate();
+
+    this.discardTimer = this.discardTime;
+    this.callTimer = this.callTime;
   }
 
   private startDiscardTimer(onTimeout: () => void): void {
@@ -131,6 +132,7 @@ export class Timer {
     this.timer = setInterval(() => {
       console.log("discard: ", this.discardTimer);
       if (this.discardTimer <= 0) {
+        this.turnUpdate();
         this.startDiscardExtraTimer(onTimeout);
         onTimeout();
         return;
