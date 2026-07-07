@@ -1,3 +1,5 @@
+const MAX_CALL_COUNT = 4;
+
 export class Timer {
   private turnTime: number;
   private callTime: number;
@@ -16,6 +18,12 @@ export class Timer {
     "N",
   ]);
   private calledChiiOrPon?: "E" | "S" | "W" | "N";
+  private callCount: Record<"E" | "S" | "W" | "N", number> = {
+    E: 0,
+    S: 0,
+    W: 0,
+    N: 0,
+  };
 
   private timer?: NodeJS.Timeout;
 
@@ -107,7 +115,7 @@ export class Timer {
         this.startDiscardTimer(onTimeout);
         onTimeout();
       },
-      this.callTime * 1000 + 1000
+      this.callTime * 1000 + 1000,
     );
   }
 
@@ -123,7 +131,7 @@ export class Timer {
     this.skipVotes.add(player);
 
     const playersExceptCurrent = ["E", "S", "W", "N"].filter(
-      (p) => p !== this.currentTurn
+      (p) => p !== this.currentTurn,
     ) as ("E" | "S" | "W" | "N")[];
 
     if (
@@ -138,9 +146,13 @@ export class Timer {
   public call(
     caller: "E" | "S" | "W" | "N",
     type: "pon" | "chii" | "kan",
-    onDiscardTimeout: () => void
+    onDiscardTimeout: () => void,
   ): void {
     this.requireStarted();
+
+    if (this.callCount[caller] >= MAX_CALL_COUNT) {
+      throw new Error(`Calls can only be made maximum ${MAX_CALL_COUNT} times`);
+    }
 
     switch (type) {
       case "pon":
@@ -148,7 +160,7 @@ export class Timer {
           throw new Error("Pon cannot be called by the current player");
         if (this.riichiPlayers.has(caller))
           throw new Error(
-            "Pon cannot be called by a player who has declared Riichi"
+            "Pon cannot be called by a player who has declared Riichi",
           );
         if (this.state !== "call")
           throw new Error("Pon can only be called after discards");
@@ -160,13 +172,13 @@ export class Timer {
           throw new Error("Chii cannot be called by the current player");
         if (this.riichiPlayers.has(caller))
           throw new Error(
-            "Chii cannot be called by a player who has declared Riichi"
+            "Chii cannot be called by a player who has declared Riichi",
           );
         if (this.state !== "call")
           throw new Error("Chii can only be called after discards");
         if (caller !== this.getNaturalNextTurn())
           throw new Error(
-            "Chii can only be called by the next player in turn order"
+            "Chii can only be called by the next player in turn order",
           );
         this.nonMenzenchinPlayers.add(caller);
         this.calledChiiOrPon = caller;
@@ -174,7 +186,7 @@ export class Timer {
       case "kan":
         if (this.riichiPlayers.has(caller) && caller !== this.getCurrentTurn())
           throw new Error(
-            "Open Kan cannot be called by a player who has declared Riichi"
+            "Open Kan cannot be called by a player who has declared Riichi",
           );
         if (caller !== this.getCurrentTurn()) {
           this.nonMenzenchinPlayers.add(caller);
@@ -184,12 +196,13 @@ export class Timer {
     }
 
     this.setCurrentTurn(caller);
+    this.callCount[caller] += 1;
     this.startDiscardTimer(onDiscardTimeout);
   }
 
   public riichi(
     caller: "E" | "S" | "W" | "N",
-    onCallTimeout: () => void
+    onCallTimeout: () => void,
   ): void {
     this.requireStarted();
 
@@ -263,6 +276,11 @@ export class Timer {
     this.nonMenzenchinPlayers.clear();
     this.calledChiiOrPon = undefined;
     this.hasStarted = false;
-    this.turnUpdate();
+    this.callCount = {
+      E: 0,
+      S: 0,
+      W: 0,
+      N: 0,
+    };
   }
 }
