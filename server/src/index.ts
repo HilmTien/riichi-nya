@@ -2,7 +2,7 @@ import { serve } from "bun";
 import { parseClientMessage } from "./lib/utils";
 import { Timer } from "./timer";
 
-const timer = new Timer(3, 10, 3);
+const timer = new Timer(10, 60, 10);
 
 const server = serve({
   port: 8000,
@@ -92,7 +92,7 @@ const server = serve({
             sendState();
             break;
           case "skip":
-            timer.voteSkip(clientMessage.caller);
+            timer.voteSkip(clientMessage.caller, sendState, onTimeout);
             sendState();
             break;
           case "riichi":

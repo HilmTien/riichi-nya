@@ -149,7 +149,11 @@ export class Timer {
     this.startDiscardTimer(onTimeout);
   }
 
-  public voteSkip(player: "E" | "S" | "W" | "N"): void {
+  public voteSkip(
+    player: "E" | "S" | "W" | "N",
+    onSkipped: () => void,
+    onTimeout: () => void,
+  ): void {
     this.requireStarted();
 
     this.skipVotes.add(player);
@@ -164,6 +168,8 @@ export class Timer {
       this.skipVotes.has(playersExceptCurrent[2])
     ) {
       this.setCurrentTurn(this.getNaturalNextTurn());
+      onSkipped();
+      this.startDiscardTimer(onTimeout);
     }
   }
 
