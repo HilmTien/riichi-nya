@@ -39,6 +39,8 @@ const server = serve({
           JSON.stringify({
             type: "state",
             currentTurn: timer.getCurrentTurn(),
+            turnTime: timer.getTurnTime(),
+            callTime: timer.getCallTime(),
             extraTimers: timer.getExtraTimers(),
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),

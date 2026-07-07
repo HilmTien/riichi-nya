@@ -25,6 +25,8 @@ export class Timer {
     N: 0,
   };
 
+  private turnTimer: number;
+  private callTimer: number;
   private timer?: NodeJS.Timeout;
 
   private hasStarted: boolean = false;
@@ -35,6 +37,8 @@ export class Timer {
     this.turnTime = turnTime;
     this.callTime = callTime;
     this.extraTime = extraTime;
+    this.turnTimer = turnTime;
+    this.callTimer = callTime;
     this.extraTimers = {
       E: extraTime,
       S: extraTime,
@@ -54,6 +58,8 @@ export class Timer {
     this.timer && clearTimeout(this.timer);
     this.timer && clearInterval(this.timer);
     this.timer = undefined;
+    this.turnTimer = this.turnTime;
+    this.callTimer = this.callTime;
 
     this.skipVotes.clear();
   }
@@ -79,6 +85,14 @@ export class Timer {
 
   public getExtraTimers(): Record<"E" | "S" | "W" | "N", number> {
     return this.extraTimers;
+  }
+
+  public getTurnTimer(): number {
+    return this.turnTimer;
+  }
+
+  public getCallTimer(): number {
+    return this.callTimer;
   }
 
   public getCurrentTurn(): "E" | "S" | "W" | "N" {
@@ -111,36 +125,53 @@ export class Timer {
   }
 
   private startDiscardTimer(onTimeout: () => void): void {
-    this.state = "discard";
-    console.log("started timer");
-    this.timer = setTimeout(() => {
-      this.timer = setInterval(() => {
-        console.log(this.extraTimers[this.currentTurn]);
-        if (this.extraTimers[this.currentTurn] <= 0) {
-          console.log("autodiscarding");
-          this.turnUpdate();
-          this.calledChiiOrPon = undefined;
-          this.startCallTimer(onTimeout);
-          onTimeout();
-          return;
-        }
+    console.log("started discard timer");
 
-        this.extraTimers[this.currentTurn] -= 1;
-      }, 1000);
-    }, this.turnTime * 1000);
+    this.state = "discard";
+    this.timer = setInterval(() => {
+      console.log("discard: ", this.turnTimer);
+      if (this.turnTimer <= 0) {
+        this.startDiscardExtraTimer(onTimeout);
+        onTimeout();
+        return;
+      }
+
+      this.turnTimer -= 1;
+    }, 1000);
+  }
+
+  private startDiscardExtraTimer(onTimeout: () => void): void {
+    console.log("started discard extra timer");
+
+    this.timer = setInterval(() => {
+      console.log("extra: ", this.extraTimers[this.currentTurn]);
+      if (this.extraTimers[this.currentTurn] <= 0) {
+        console.log("autodiscarding");
+        this.turnUpdate();
+        this.calledChiiOrPon = undefined;
+        this.startCallTimer(onTimeout);
+        onTimeout();
+        return;
+      }
+
+      this.extraTimers[this.currentTurn] -= 1;
+    }, 1000);
   }
 
   private startCallTimer(onTimeout: () => void): void {
     this.state = "call";
     console.log("started call timer");
-    this.timer = setTimeout(
-      () => {
+    this.timer = setInterval(() => {
+      console.log("call: ", this.callTimer);
+      if (this.callTimer <= 0) {
         this.setCurrentTurn(this.getNaturalNextTurn());
         this.startDiscardTimer(onTimeout);
         onTimeout();
-      },
-      this.callTime * 1000 + 1000,
-    );
+        return;
+      }
+
+      this.callTimer -= 1;
+    }, 1000);
   }
 
   public start(onTimeout: () => void): void {
