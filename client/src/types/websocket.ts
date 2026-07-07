@@ -10,6 +10,7 @@ export const ServerMessageSchema = z.discriminatedUnion("type", [
     discardTimer: z.number(),
     callTimer: z.number(),
     extraTimers: z.record(z.enum(player), z.number()),
+    extraTimerIsRunning: z.boolean(),
     hasStarted: z.boolean(),
     state: z.enum(["call", "discard"]),
     callCount: z.record(z.enum(player), z.number()),

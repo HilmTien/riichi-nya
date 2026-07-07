@@ -28,12 +28,6 @@ export function App() {
       <GlobalTimer closedKanSignal={closedKanSignal} />
       <Timer
         player="E"
-        extraTimers={state.extraTimers}
-        isCurrentTurn={state.currentTurn === "E"}
-        hasStarted={state.hasStarted}
-        discardTime={state.discardTime}
-        state={state.state}
-        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
@@ -41,12 +35,6 @@ export function App() {
       />
       <Timer
         player="S"
-        extraTimers={state.extraTimers}
-        isCurrentTurn={state.currentTurn === "S"}
-        hasStarted={state.hasStarted}
-        discardTime={state.discardTime}
-        state={state.state}
-        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
@@ -54,12 +42,6 @@ export function App() {
       />
       <Timer
         player="W"
-        extraTimers={state.extraTimers}
-        isCurrentTurn={state.currentTurn === "W"}
-        hasStarted={state.hasStarted}
-        discardTime={state.discardTime}
-        state={state.state}
-        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
@@ -67,12 +49,6 @@ export function App() {
       />
       <Timer
         player="N"
-        extraTimers={state.extraTimers}
-        isCurrentTurn={state.currentTurn === "N"}
-        hasStarted={state.hasStarted}
-        discardTime={state.discardTime}
-        state={state.state}
-        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}

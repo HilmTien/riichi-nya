@@ -30,6 +30,7 @@ export class Timer {
   private timer?: NodeJS.Timeout;
 
   private hasStarted: boolean = false;
+  private extraTimerIsRunning: boolean = false;
 
   private state: "call" | "discard" = "discard";
 
@@ -58,6 +59,8 @@ export class Timer {
     this.timer && clearTimeout(this.timer);
     this.timer && clearInterval(this.timer);
     this.timer = undefined;
+
+    this.extraTimerIsRunning = false;
 
     this.skipVotes.clear();
   }
@@ -99,6 +102,10 @@ export class Timer {
 
   public getHasStarted(): boolean {
     return this.hasStarted;
+  }
+
+  public getExtraTimerIsRunning(): boolean {
+    return this.extraTimerIsRunning;
   }
 
   public getState(): "call" | "discard" {
@@ -144,6 +151,8 @@ export class Timer {
 
   private startDiscardExtraTimer(onTimeout: () => void): void {
     console.log("started discard extra timer");
+
+    this.extraTimerIsRunning = true;
 
     this.timer = setInterval(() => {
       console.log("extra: ", this.extraTimers[this.currentTurn]);
