@@ -9,6 +9,8 @@ interface AppState {
   callTime: number;
   extraTime: number;
   extraTimers: Record<Player, number>;
+  discardTimer: number;
+  callTimer: number;
   latency?: number;
   hasStarted: boolean;
   state: "call" | "discard";
@@ -23,6 +25,8 @@ export const initialState: AppState = {
   discardTime: 10,
   callTime: 10,
   extraTime: 30,
+  discardTimer: 10,
+  callTimer: 10,
   extraTimers: {
     E: 60,
     S: 60,
@@ -61,6 +65,8 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         ...state,
         currentTurn: action.currentTurn,
         extraTimers: action.extraTimers,
+        discardTime: action.discardTime,
+        callTime: action.callTime,
         hasStarted: action.hasStarted,
         state: action.state,
         callCount: action.callCount,

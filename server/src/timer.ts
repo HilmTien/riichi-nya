@@ -25,7 +25,7 @@ export class Timer {
     N: 0,
   };
 
-  private turnTimer: number;
+  private discardTimer: number;
   private callTimer: number;
   private timer?: NodeJS.Timeout;
 
@@ -37,7 +37,7 @@ export class Timer {
     this.turnTime = turnTime;
     this.callTime = callTime;
     this.extraTime = extraTime;
-    this.turnTimer = turnTime;
+    this.discardTimer = turnTime;
     this.callTimer = callTime;
     this.extraTimers = {
       E: extraTime,
@@ -58,7 +58,7 @@ export class Timer {
     this.timer && clearTimeout(this.timer);
     this.timer && clearInterval(this.timer);
     this.timer = undefined;
-    this.turnTimer = this.turnTime;
+    this.discardTimer = this.turnTime;
     this.callTimer = this.callTime;
 
     this.skipVotes.clear();
@@ -87,8 +87,8 @@ export class Timer {
     return this.extraTimers;
   }
 
-  public getTurnTimer(): number {
-    return this.turnTimer;
+  public getDiscardTime(): number {
+    return this.discardTimer;
   }
 
   public getCallTimer(): number {
@@ -129,14 +129,14 @@ export class Timer {
 
     this.state = "discard";
     this.timer = setInterval(() => {
-      console.log("discard: ", this.turnTimer);
-      if (this.turnTimer <= 0) {
+      console.log("discard: ", this.discardTimer);
+      if (this.discardTimer <= 0) {
         this.startDiscardExtraTimer(onTimeout);
         onTimeout();
         return;
       }
 
-      this.turnTimer -= 1;
+      this.discardTimer -= 1;
     }, 1000);
   }
 
