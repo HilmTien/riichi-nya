@@ -6,12 +6,7 @@ import { GlobalTimer } from "./components/GlobalTimer";
 
 export function App() {
   const { state, sendMessage } = useWebSocketContext();
-  const [closedKanSignal, setClosedKanSignal] = React.useState(false);
   const [chiiOrPonCalled, setChiiOrPonCalled] = React.useState(false);
-
-  const onClosedKan = () => {
-    setClosedKanSignal((prev) => !prev);
-  };
 
   React.useEffect(() => {
     if (state.state === "call") {
@@ -25,32 +20,24 @@ export function App() {
       <button onClick={() => sendMessage({ type: "start" })}>Start</button>
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
       <p>State: {state.state}</p>
-      <GlobalTimer closedKanSignal={closedKanSignal} />
+      <GlobalTimer />
       <Timer
         player="E"
-        closedKanSignal={closedKanSignal}
-        onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
         setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="S"
-        closedKanSignal={closedKanSignal}
-        onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
         setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="W"
-        closedKanSignal={closedKanSignal}
-        onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
         setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="N"
-        closedKanSignal={closedKanSignal}
-        onClosedKan={onClosedKan}
         chiiOrPonCalled={chiiOrPonCalled}
         setChiiOrPonCalled={setChiiOrPonCalled}
       />

@@ -13,7 +13,9 @@ export const useWebSocket = (url: string) => {
 
     socket.addEventListener("message", (event: MessageEvent<string>) => {
       const message = parseServerMessage(event.data);
-      console.log(message);
+      if (message?.type !== "pong") {
+        console.log(message);
+      }
       if (message) {
         dispatch(message);
       }
@@ -33,6 +35,16 @@ export const useWebSocket = (url: string) => {
   useEffect(() => {
     const timer = setInterval(() => {
       sendMessage({ type: "state" });
+    }, 5000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [sendMessage]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      sendMessage({ type: "ping" });
     }, 5000);
 
     return () => {

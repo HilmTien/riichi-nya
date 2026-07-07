@@ -1,13 +1,11 @@
 import { useWebSocketContext } from "@/providers/WebSocketProvider";
 import React from "react";
 
-interface GlobalTimerProps {
-  closedKanSignal: boolean;
-}
+interface GlobalTimerProps {}
 
 const decrement = (value: number) => (value > 0 ? value - 1 : 0);
 
-export function GlobalTimer({ closedKanSignal }: GlobalTimerProps) {
+export function GlobalTimer({}: GlobalTimerProps) {
   const { state } = useWebSocketContext();
 
   const [localDiscardTimer, setLocalDiscardTimer] = React.useState(
@@ -33,20 +31,12 @@ export function GlobalTimer({ closedKanSignal }: GlobalTimerProps) {
     }
 
     return () => clearInterval(timer);
-  }, [state.state, state.hasStarted]);
+  }, [state.state, state.hasStarted, state.discardTimer, state.callTimer]);
 
   React.useEffect(() => {
     setLocalDiscardTimer(state.discardTimer);
     setLocalCallTimer(state.callTimer);
   }, [state.discardTimer, state.callTimer]);
-
-  // React.useEffect(() => {
-  //   setLocalDiscardTimer(state.discardTimer);
-  // }, [state.discardTimer]);
-
-  // React.useEffect(() => {
-  //   setLocalCallTimer(state.callTimer);
-  // }, [state.callTimer]);
 
   return (
     <div>

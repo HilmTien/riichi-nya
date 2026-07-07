@@ -2,13 +2,11 @@ import { useWebSocketContext } from "@/providers/WebSocketProvider";
 
 interface DiscardActionsProps {
   player: "E" | "S" | "W" | "N";
-  onClosedKan: () => void;
   chiiOrPonCalled: boolean;
 }
 
 export function DiscardActions({
   player,
-  onClosedKan,
   chiiOrPonCalled,
 }: DiscardActionsProps) {
   const { state, sendMessage } = useWebSocketContext();
@@ -55,7 +53,6 @@ export function DiscardActions({
         disabled={disableKan}
         onClick={() => {
           sendMessage({ type: "kan", caller: player });
-          onClosedKan();
         }}
       >
         Kan

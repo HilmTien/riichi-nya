@@ -5,16 +5,12 @@ import { useWebSocketContext } from "@/providers/WebSocketProvider";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
-  closedKanSignal: boolean;
-  onClosedKan: () => void;
   chiiOrPonCalled: boolean;
   setChiiOrPonCalled: (value: boolean) => void;
 }
 
 export function Timer({
   player,
-  closedKanSignal,
-  onClosedKan,
   chiiOrPonCalled,
   setChiiOrPonCalled,
 }: TimerProps) {
@@ -47,13 +43,7 @@ export function Timer({
     return () => {
       clearInterval(timer);
     };
-  }, [
-    closedKanSignal,
-    isCurrentTurn,
-    state.hasStarted,
-    state.state,
-    state.extraTimerIsRunning,
-  ]);
+  }, [isCurrentTurn, state.hasStarted, state.state, state.extraTimerIsRunning]);
 
   return (
     <div
@@ -64,11 +54,7 @@ export function Timer({
       <p>Local timer: {localExtraTime}</p>
       <p>Call count: {state.callCount[player]}</p>
       {isCurrentTurn ? (
-        <DiscardActions
-          player={player}
-          onClosedKan={onClosedKan}
-          chiiOrPonCalled={chiiOrPonCalled}
-        />
+        <DiscardActions player={player} chiiOrPonCalled={chiiOrPonCalled} />
       ) : (
         <CallActions
           player={player}
