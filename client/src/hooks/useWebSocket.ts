@@ -13,6 +13,7 @@ export const useWebSocket = (url: string) => {
 
     socket.addEventListener("message", (event: MessageEvent<string>) => {
       const message = parseServerMessage(event.data);
+      console.log(message);
       if (message) {
         dispatch(message);
       }
@@ -24,10 +25,10 @@ export const useWebSocket = (url: string) => {
   }, [url]);
 
   const sendMessage = useCallback((message: ClientMessage) => {
-    if (socketRef.current) {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify(message));
     }
   }, []);
 
   return { state, sendMessage };
-}
+};
