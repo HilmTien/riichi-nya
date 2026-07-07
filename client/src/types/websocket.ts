@@ -12,6 +12,13 @@ export const ServerMessageSchema = z.discriminatedUnion("type", [
     state: z.enum(["call", "discard"]),
     callCount: z.record(z.enum(player), z.number()),
     nonMenzenchinPlayers: z.array(z.enum(player)),
+    riichiPlayers: z.array(z.enum(player)),
+  }),
+  z.object({
+    type: z.literal("settings"),
+    turnTime: z.number(),
+    callTime: z.number(),
+    extraTime: z.number(),
   }),
   z.object({
     type: z.literal("set_player"),

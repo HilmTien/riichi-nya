@@ -15,7 +15,10 @@ export function DiscardActions({
 
   const discardDisabled = state.state !== "discard" || !state.hasStarted;
   const forceDiscard = discardDisabled || chiiOrPonCalled;
-  const disableRiichi = forceDiscard || state.nonMenzenchinPlayers.has(player);
+  const disableRiichi =
+    forceDiscard ||
+    state.nonMenzenchinPlayers.has(player) ||
+    state.riichiPlayers.has(player);
   const disableKan = forceDiscard || state.callCount[player] >= 4;
 
   return (

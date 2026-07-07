@@ -43,6 +43,7 @@ const server = serve({
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),
             callCount: timer.getCallCount(),
+            riichiPlayers: Array.from(timer.getRiichiPlayers()),
             nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
           }),
         );
@@ -115,7 +116,28 @@ const server = serve({
         }
       }
     }, // a message is received
-    open(ws) {}, // a socket is opened
+    open(ws) {
+      ws.send(
+        JSON.stringify({
+          type: "state",
+          currentTurn: timer.getCurrentTurn(),
+          extraTimers: timer.getExtraTimers(),
+          hasStarted: timer.getHasStarted(),
+          state: timer.getState(),
+          callCount: timer.getCallCount(),
+          riichiPlayers: Array.from(timer.getRiichiPlayers()),
+          nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
+        }),
+      );
+      ws.send(
+        JSON.stringify({
+          type: "settings",
+          turnTime: timer.getTurnTime(),
+          extraTime: timer.getExtraTime(),
+          callTime: timer.getCallTime(),
+        }),
+      );
+    }, // a socket is opened
     close(ws, code, message) {}, // a socket is closed
     drain(ws) {}, // the socket is ready to receive more data
   },

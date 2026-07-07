@@ -65,6 +65,18 @@ export class Timer {
     return turns[nextIndex];
   }
 
+  public getTurnTime(): number {
+    return this.turnTime;
+  }
+
+  public getCallTime(): number {
+    return this.callTime;
+  }
+
+  public getExtraTime(): number {
+    return this.extraTime;
+  }
+
   public getExtraTimers(): Record<"E" | "S" | "W" | "N", number> {
     return this.extraTimers;
   }
@@ -79,6 +91,10 @@ export class Timer {
 
   public getState(): "call" | "discard" {
     return this.state;
+  }
+
+  public getRiichiPlayers(): Set<"E" | "S" | "W" | "N"> {
+    return this.riichiPlayers;
   }
 
   public getNonMenzenchinPlayers(): Set<"E" | "S" | "W" | "N"> {

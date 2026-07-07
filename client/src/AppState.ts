@@ -14,19 +14,20 @@ interface AppState {
   state: "call" | "discard";
   callCount: Record<Player, number>;
   nonMenzenchinPlayers: Set<Player>;
+  riichiPlayers: Set<Player>;
 }
 
 export const initialState: AppState = {
   player: "E",
   currentTurn: "E",
-  discardTime: 3,
-  callTime: 3,
-  extraTime: 10,
+  discardTime: 10,
+  callTime: 10,
+  extraTime: 30,
   extraTimers: {
-    E: 10,
-    S: 10,
-    W: 10,
-    N: 10,
+    E: 60,
+    S: 60,
+    W: 60,
+    N: 60,
   },
   latency: undefined,
   hasStarted: false,
@@ -38,6 +39,7 @@ export const initialState: AppState = {
     N: 0,
   },
   nonMenzenchinPlayers: new Set(),
+  riichiPlayers: new Set(),
 };
 
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
@@ -63,6 +65,14 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         state: action.state,
         callCount: action.callCount,
         nonMenzenchinPlayers: new Set(action.nonMenzenchinPlayers),
+        riichiPlayers: new Set(action.riichiPlayers),
+      };
+    case "settings":
+      return {
+        ...state,
+        discardTime: action.turnTime,
+        callTime: action.callTime,
+        extraTime: action.extraTime,
       };
   }
 };
