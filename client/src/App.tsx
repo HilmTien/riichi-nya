@@ -7,10 +7,17 @@ import { GlobalTimer } from "./components/GlobalTimer";
 export function App() {
   const { state, sendMessage } = useWebSocketContext();
   const [closedKanSignal, setClosedKanSignal] = React.useState(false);
+  const [chiiOrPonCalled, setChiiOrPonCalled] = React.useState(false);
 
   const onClosedKan = () => {
     setClosedKanSignal((prev) => !prev);
   };
+
+  React.useEffect(() => {
+    if (state.state === "call") {
+      setChiiOrPonCalled(false);
+    }
+  }, [state.state]);
 
   return (
     <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
@@ -32,8 +39,11 @@ export function App() {
         hasStarted={state.hasStarted}
         discardTime={state.discardTime}
         state={state.state}
+        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
+        chiiOrPonCalled={chiiOrPonCalled}
+        setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="S"
@@ -42,8 +52,11 @@ export function App() {
         hasStarted={state.hasStarted}
         discardTime={state.discardTime}
         state={state.state}
+        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
+        chiiOrPonCalled={chiiOrPonCalled}
+        setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="W"
@@ -52,8 +65,11 @@ export function App() {
         hasStarted={state.hasStarted}
         discardTime={state.discardTime}
         state={state.state}
+        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
+        chiiOrPonCalled={chiiOrPonCalled}
+        setChiiOrPonCalled={setChiiOrPonCalled}
       />
       <Timer
         player="N"
@@ -62,8 +78,11 @@ export function App() {
         hasStarted={state.hasStarted}
         discardTime={state.discardTime}
         state={state.state}
+        callCount={state.callCount}
         closedKanSignal={closedKanSignal}
         onClosedKan={onClosedKan}
+        chiiOrPonCalled={chiiOrPonCalled}
+        setChiiOrPonCalled={setChiiOrPonCalled}
       />
     </div>
   );

@@ -14,3 +14,12 @@ export const parseServerMessage = (data: string): ServerMessage | null => {
     return null;
   }
 };
+
+export const nextTurn = (
+  currentTurn: "E" | "S" | "W" | "N",
+): "E" | "S" | "W" | "N" => {
+  const turns: ("E" | "S" | "W" | "N")[] = ["E", "S", "W", "N"];
+  const currentIndex = turns.indexOf(currentTurn);
+  const nextIndex = (currentIndex + 1) % turns.length;
+  return turns[nextIndex]!;
+};

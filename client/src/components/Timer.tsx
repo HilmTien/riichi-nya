@@ -9,8 +9,11 @@ interface TimerProps {
   hasStarted: boolean;
   discardTime: number;
   state: "call" | "discard";
+  callCount: Record<"E" | "S" | "W" | "N", number>;
   closedKanSignal: boolean;
   onClosedKan: () => void;
+  chiiOrPonCalled: boolean;
+  setChiiOrPonCalled: (value: boolean) => void;
 }
 
 export function Timer({
@@ -20,8 +23,11 @@ export function Timer({
   hasStarted,
   discardTime,
   state,
+  callCount,
   closedKanSignal,
   onClosedKan,
+  chiiOrPonCalled,
+  setChiiOrPonCalled,
 }: TimerProps) {
   const [localExtraTime, setLocalExtraTime] = React.useState(
     extraTimers[player],
@@ -52,15 +58,24 @@ export function Timer({
 
   return (
     <div
-      className={`rounded p-4 ${isCurrentTurn ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+      className={`rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
     >
       <p>{player}</p>
-      <p>{extraTimers[player]}</p>
-      <p>{localExtraTime}</p>
+      <p>Server timer: {extraTimers[player]}</p>
+      <p>Local timer: {localExtraTime}</p>
+      <p>Call count: {callCount[player]}</p>
       {isCurrentTurn ? (
-        <DiscardActions player={player} onClosedKan={onClosedKan} />
+        <DiscardActions
+          player={player}
+          onClosedKan={onClosedKan}
+          chiiOrPonCalled={chiiOrPonCalled}
+        />
       ) : (
-        <CallActions player={player} />
+        <CallActions
+          player={player}
+          chiiOrPonCalled={chiiOrPonCalled}
+          setChiiOrPonCalled={setChiiOrPonCalled}
+        />
       )}
     </div>
   );
