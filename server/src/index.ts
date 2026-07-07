@@ -42,6 +42,7 @@ const server = serve({
             extraTimers: timer.getExtraTimers(),
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),
+            callCount: timer.getCallCount(),
           }),
         );
       };

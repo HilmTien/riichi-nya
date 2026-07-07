@@ -12,6 +12,7 @@ interface AppState {
   latency?: number;
   hasStarted: boolean;
   state: "call" | "discard";
+  callCount: Record<Player, number>;
 }
 
 export const initialState: AppState = {
@@ -29,6 +30,12 @@ export const initialState: AppState = {
   latency: undefined,
   hasStarted: false,
   state: "discard",
+  callCount: {
+    E: 0,
+    S: 0,
+    W: 0,
+    N: 0,
+  },
 };
 
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
@@ -52,6 +59,7 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         extraTimers: action.extraTimers,
         hasStarted: action.hasStarted,
         state: action.state,
+        callCount: action.callCount,
       };
   }
 };

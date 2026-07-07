@@ -81,6 +81,10 @@ export class Timer {
     return this.state;
   }
 
+  public getCallCount(): Record<"E" | "S" | "W" | "N", number> {
+    return this.callCount;
+  }
+
   private setCurrentTurn(turn: "E" | "S" | "W" | "N"): void {
     this.currentTurn = turn;
     this.turnUpdate();
