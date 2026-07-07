@@ -24,7 +24,7 @@ export function Timer({
   onClosedKan,
 }: TimerProps) {
   const [localExtraTime, setLocalExtraTime] = React.useState(
-    extraTimers[player]
+    extraTimers[player],
   );
 
   React.useEffect(() => {

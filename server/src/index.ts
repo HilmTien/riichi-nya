@@ -42,7 +42,7 @@ const server = serve({
             extraTimers: timer.getExtraTimers(),
             hasStarted: timer.getHasStarted(),
             state: timer.getState(),
-          })
+          }),
         );
       };
 
@@ -61,7 +61,7 @@ const server = serve({
               JSON.stringify({
                 type: "set_player",
                 player: clientMessage.player,
-              })
+              }),
             );
             break;
           case "start":

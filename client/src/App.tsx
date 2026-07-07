@@ -1,7 +1,6 @@
 import React from "react";
 import "./index.css";
 import { useWebSocketContext } from "./providers/WebSocketProvider";
-import type { ClientMessage } from "./types/websocket";
 import { Timer } from "./components/Timer";
 import { GlobalTimer } from "./components/GlobalTimer";
 

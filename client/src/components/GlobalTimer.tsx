@@ -16,7 +16,7 @@ export function GlobalTimer({
   closedKanSignal,
 }: GlobalTimerProps & { callTime: number; discardTime: number }) {
   const [timer, setTimer] = React.useState(
-    state === "call" ? callTime : discardTime
+    state === "call" ? callTime : discardTime,
   );
 
   React.useEffect(() => {

@@ -2,7 +2,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { createContext, useContext } from "react";
 
 const WebSocketContext = createContext<ReturnType<typeof useWebSocket> | null>(
-  null
+  null,
 );
 
 export function WebSocketProvider({
@@ -25,7 +25,7 @@ export function useWebSocketContext() {
   const ctx = useContext(WebSocketContext);
   if (!ctx) {
     throw new Error(
-      "useWebSocketContext must be used within a WebSocketProvider"
+      "useWebSocketContext must be used within a WebSocketProvider",
     );
   }
   return ctx;
