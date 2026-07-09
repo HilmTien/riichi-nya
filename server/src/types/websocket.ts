@@ -14,6 +14,7 @@ export const ClientMessageSchema = z.discriminatedUnion("type", [
     clientId: z.uuid(),
     player: z.enum(player),
   }),
+  z.object({ type: z.literal("leave"), clientId: z.uuid() }),
   z.object({ type: z.literal("pon"), caller: z.enum(player) }),
   z.object({ type: z.literal("chii"), caller: z.enum(player) }),
   z.object({ type: z.literal("kan"), caller: z.enum(player) }),

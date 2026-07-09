@@ -72,6 +72,10 @@ export type ClientMessage =
     player: "E" | "S" | "W" | "N";
   }
   | {
+    type: "leave";
+    clientId: string;
+  }
+  | {
     type: "pon";
     caller: "E" | "S" | "W" | "N";
   }

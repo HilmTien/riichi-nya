@@ -89,9 +89,11 @@ const server = serve({
                 player: clientMessage.player,
               }),
             );
-            sendState();
             sendSeats();
             break;
+          case "leave":
+            seats.leave(clientMessage.clientId);
+            sendSeats();
           case "request_client_id":
             ws.send(
               JSON.stringify({

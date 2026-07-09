@@ -48,7 +48,9 @@ export function App() {
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
       <button
         onClick={() =>
-          sendMessage({ type: "join", clientId: clientId, player: "E" })
+          state.seats.E !== null && state.seats.E === clientId
+            ? sendMessage({ type: "leave", clientId: clientId })
+            : sendMessage({ type: "join", clientId: clientId, player: "E" })
         }
         disabled={state.seats.E !== null && state.seats.E !== clientId}
       >
