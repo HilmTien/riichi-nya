@@ -1,8 +1,11 @@
-import { serve } from "bun";
+import { serve, ServerWebSocket } from "bun";
 import { parseClientMessage } from "./lib/utils";
 import { Timer } from "./timer";
+import { Seats } from "./seats";
 
 const timer = new Timer(10, 60, 10);
+const seats = new Seats();
+const sockets = new Set<ServerWebSocket<unknown>>();
 
 const server = serve({
   port: 8000,
@@ -52,6 +55,21 @@ const server = serve({
         );
       };
 
+      const sendSeats = (ws: ServerWebSocket<unknown>) => {
+        ws.send(
+          JSON.stringify({
+            type: "seats",
+            seats: seats.getSeats(),
+          }),
+        );
+      };
+
+      const broadcastSeats = () => {
+        for (const socket of sockets) {
+          sendSeats(socket);
+        }
+      };
+
       const onTimeout = sendState;
 
       try {
@@ -62,13 +80,19 @@ const server = serve({
           case "state":
             sendState();
             break;
+          case "seats":
+            broadcastSeats();
+            break;
           case "join":
+            seats.join(clientMessage.clientId, clientMessage.player);
             ws.send(
               JSON.stringify({
                 type: "set_player",
                 player: clientMessage.player,
               }),
             );
+            sendState();
+            broadcastSeats();
             break;
           case "start":
             timer.start(onTimeout);
@@ -76,7 +100,9 @@ const server = serve({
             break;
           case "reset":
             timer.reset();
+            seats.reset();
             sendState();
+            broadcastSeats();
             break;
           case "pon":
             timer.call(clientMessage.caller, "pon", onTimeout);
@@ -120,6 +146,7 @@ const server = serve({
       }
     }, // a message is received
     open(ws) {
+      sockets.add(ws);
       ws.send(
         JSON.stringify({
           type: "state",
@@ -137,6 +164,12 @@ const server = serve({
       );
       ws.send(
         JSON.stringify({
+          type: "seats",
+          seats: seats.getSeats(),
+        }),
+      );
+      ws.send(
+        JSON.stringify({
           type: "settings",
           discardTime: timer.getDiscardTime(),
           extraTime: timer.getExtraTime(),
@@ -144,8 +177,10 @@ const server = serve({
         }),
       );
     }, // a socket is opened
-    close(ws, code, message) {}, // a socket is closed
-    drain(ws) {}, // the socket is ready to receive more data
+    close(ws, code, message) {
+      sockets.delete(ws);
+    }, // a socket is closed
+    drain(ws) { }, // the socket is ready to receive more data
   },
 });
 

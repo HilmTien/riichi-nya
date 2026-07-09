@@ -18,6 +18,7 @@ interface AppState {
   callCount: Record<Player, number>;
   nonMenzenchinPlayers: Set<Player>;
   riichiPlayers: Set<Player>;
+  seats: Record<Player, string | null>;
 }
 
 export const initialState: AppState = {
@@ -46,6 +47,12 @@ export const initialState: AppState = {
   },
   nonMenzenchinPlayers: new Set(),
   riichiPlayers: new Set(),
+  seats: {
+    E: null,
+    S: null,
+    W: null,
+    N: null,
+  },
 };
 
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
@@ -82,6 +89,11 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         discardTime: action.discardTime,
         callTime: action.callTime,
         extraTime: action.extraTime,
+      };
+    case "seats":
+      return {
+        ...state,
+        seats: action.seats,
       };
   }
 };

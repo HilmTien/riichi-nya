@@ -7,6 +7,11 @@ export const useWebSocket = (url: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const socketRef = useRef<WebSocket | null>(null);
 
+  const clientIdRef = useRef<string>(
+    localStorage.getItem("clientId") ?? crypto.randomUUID(),
+  );
+  localStorage.setItem("clientId", clientIdRef.current);
+
   useEffect(() => {
     const socket = new WebSocket(url);
     socketRef.current = socket;
@@ -52,5 +57,5 @@ export const useWebSocket = (url: string) => {
     };
   }, [sendMessage]);
 
-  return { state, sendMessage };
+  return { state, sendMessage, clientId: clientIdRef.current };
 };

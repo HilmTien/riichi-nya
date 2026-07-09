@@ -5,7 +5,7 @@ import { Timer } from "./components/Timer";
 import { GlobalTimer } from "./components/GlobalTimer";
 
 export function App() {
-  const { state, sendMessage } = useWebSocketContext();
+  const { state, sendMessage, clientId } = useWebSocketContext();
   const [chiiOrPonCalled, setChiiOrPonCalled] = React.useState(false);
 
   React.useEffect(() => {
