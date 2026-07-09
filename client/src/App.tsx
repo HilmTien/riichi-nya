@@ -11,13 +11,17 @@ export function App() {
   const { state, sendMessage, clientId } = useWebSocketContext();
   const [chiiOrPonCalled, setChiiOrPonCalled] = React.useState(false);
 
-  const currentSeat = players.find((plr) => state.seats[plr] === clientId);
-
   React.useEffect(() => {
     if (state.state === "call") {
       setChiiOrPonCalled(false);
     }
   }, [state.state]);
+
+  if (!clientId) {
+    return <p>Connecting to server</p>;
+  }
+
+  const currentSeat = players.find((plr) => state.seats[plr] === clientId);
 
   return state.hasStarted ? (
     <div className="relative z-10 flex flex-col gap-4 p-8 text-center">

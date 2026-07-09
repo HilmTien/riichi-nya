@@ -1,25 +1,37 @@
 import { initialState, reducer } from "@/AppState";
 import { parseServerMessage } from "@/lib/utils";
 import type { ClientMessage } from "@/types/websocket";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 export const useWebSocket = (url: string) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const socketRef = useRef<WebSocket | null>(null);
-
-  const clientIdRef = useRef<string>(
-    localStorage.getItem("clientId") ?? crypto.randomUUID(),
+  const [clientId, setClientId] = useState<string | null>(
+    localStorage.getItem("clientId"),
   );
-  localStorage.setItem("clientId", clientIdRef.current);
 
   useEffect(() => {
     const socket = new WebSocket(url);
     socketRef.current = socket;
 
+    socket.addEventListener("open", () => {
+      const existingId = localStorage.getItem("clientId");
+
+      if (existingId) {
+        setClientId(existingId);
+      } else {
+        socket.send(JSON.stringify({ type: "request_client_id" }));
+      }
+    });
+
     socket.addEventListener("message", (event: MessageEvent<string>) => {
       const message = parseServerMessage(event.data);
       if (message?.type !== "pong") {
         console.log(message);
+      }
+      if (message?.type === "client_id") {
+        localStorage.setItem("clientId", message.id);
+        setClientId(message.id);
       }
       if (message) {
         dispatch(message);
@@ -57,5 +69,5 @@ export const useWebSocket = (url: string) => {
     };
   }, [sendMessage]);
 
-  return { state, sendMessage, clientId: clientIdRef.current };
+  return { state, sendMessage, clientId };
 };

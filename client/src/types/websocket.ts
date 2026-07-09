@@ -37,7 +37,11 @@ export const ServerMessageSchema = z.discriminatedUnion("type", [
   }),
   z.object({
     type: z.literal("seats"),
-    seats: z.record(z.enum(player), z.string().nullable()),
+    seats: z.record(z.enum(player), z.uuid().nullable()),
+  }),
+  z.object({
+    type: z.literal("client_id"),
+    id: z.uuid(),
   }),
 ]);
 
@@ -46,6 +50,9 @@ export type ServerMessage = z.infer<typeof ServerMessageSchema>;
 export type ClientMessage =
   | {
     type: "ping";
+  }
+  | {
+    type: "request_client_id";
   }
   | {
     type: "state";

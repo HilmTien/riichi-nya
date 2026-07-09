@@ -92,6 +92,14 @@ const server = serve({
             sendState();
             sendSeats();
             break;
+          case "request_client_id":
+            ws.send(
+              JSON.stringify({
+                type: "client_id",
+                id: crypto.randomUUID(),
+              }),
+            );
+            break;
           case "start":
             if (!seats.canStart()) {
               throw new Error("All four seats must be taken before starting");

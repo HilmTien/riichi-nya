@@ -59,6 +59,8 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
   switch (action.type) {
     case "pong":
       return { ...state, latency: Date.now() - action.timestamp };
+    case "client_id":
+      return state;
     case "set_player":
       return { ...state, player: action.player };
     case "set_turn":

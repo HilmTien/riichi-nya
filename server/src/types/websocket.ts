@@ -4,11 +4,16 @@ const player = ["E", "S", "W", "N"] as const;
 
 export const ClientMessageSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("ping") }),
+  z.object({ type: z.literal("request_client_id") }),
   z.object({ type: z.literal("state") }),
   z.object({ type: z.literal("start") }),
   z.object({ type: z.literal("reset") }),
   z.object({ type: z.literal("seats") }),
-  z.object({ type: z.literal("join"), clientId: z.string(), player: z.enum(player) }),
+  z.object({
+    type: z.literal("join"),
+    clientId: z.uuid(),
+    player: z.enum(player),
+  }),
   z.object({ type: z.literal("pon"), caller: z.enum(player) }),
   z.object({ type: z.literal("chii"), caller: z.enum(player) }),
   z.object({ type: z.literal("kan"), caller: z.enum(player) }),
