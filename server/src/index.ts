@@ -38,35 +38,33 @@ const server = serve({
       // };
 
       const sendState = () => {
-        ws.send(
-          JSON.stringify({
-            type: "state",
-            currentTurn: timer.getCurrentTurn(),
-            discardTimer: timer.getDiscardTimer(),
-            callTimer: timer.getCallTimer(),
-            extraTimers: timer.getExtraTimers(),
-            extraTimerIsRunning: timer.getExtraTimerIsRunning(),
-            hasStarted: timer.getHasStarted(),
-            state: timer.getState(),
-            callCount: timer.getCallCount(),
-            riichiPlayers: Array.from(timer.getRiichiPlayers()),
-            nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
-          }),
-        );
-      };
-
-      const sendSeats = (ws: ServerWebSocket<unknown>) => {
-        ws.send(
-          JSON.stringify({
-            type: "seats",
-            seats: seats.getSeats(),
-          }),
-        );
-      };
-
-      const broadcastSeats = () => {
         for (const socket of sockets) {
-          sendSeats(socket);
+          socket.send(
+            JSON.stringify({
+              type: "state",
+              currentTurn: timer.getCurrentTurn(),
+              discardTimer: timer.getDiscardTimer(),
+              callTimer: timer.getCallTimer(),
+              extraTimers: timer.getExtraTimers(),
+              extraTimerIsRunning: timer.getExtraTimerIsRunning(),
+              hasStarted: timer.getHasStarted(),
+              state: timer.getState(),
+              callCount: timer.getCallCount(),
+              riichiPlayers: Array.from(timer.getRiichiPlayers()),
+              nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
+            }),
+          );
+        }
+      };
+
+      const sendSeats = () => {
+        for (const socket of sockets) {
+          socket.send(
+            JSON.stringify({
+              type: "seats",
+              seats: seats.getSeats(),
+            }),
+          );
         }
       };
 
@@ -81,7 +79,7 @@ const server = serve({
             sendState();
             break;
           case "seats":
-            broadcastSeats();
+            sendSeats();
             break;
           case "join":
             seats.join(clientMessage.clientId, clientMessage.player);
@@ -92,9 +90,12 @@ const server = serve({
               }),
             );
             sendState();
-            broadcastSeats();
+            sendSeats();
             break;
           case "start":
+            if (!seats.canStart()) {
+              throw new Error("All four seats must be taken before starting");
+            }
             timer.start(onTimeout);
             sendState();
             break;
@@ -102,7 +103,7 @@ const server = serve({
             timer.reset();
             seats.reset();
             sendState();
-            broadcastSeats();
+            sendSeats();
             break;
           case "pon":
             timer.call(clientMessage.caller, "pon", onTimeout);

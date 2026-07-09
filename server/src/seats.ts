@@ -7,10 +7,15 @@ export class Seats {
   };
 
   public join(clientId: string, seat: "E" | "S" | "W" | "N"): void {
-    const currentClient = this.clientSeats[seat];
+    const currentSeat = this.clientSeats[seat];
 
-    if (currentClient !== null && currentClient !== clientId) {
+    if (currentSeat !== null && currentSeat !== clientId) {
       throw new Error("Seat is already taken");
+    }
+
+    if (currentSeat === clientId) {
+      this.clientSeats[seat] = null;
+      return;
     }
 
     for (const plr of ["E", "S", "W", "N"] as const) {
@@ -18,7 +23,6 @@ export class Seats {
         this.clientSeats[plr] = null;
       }
     }
-
     this.clientSeats[seat] = clientId;
   }
 
@@ -28,6 +32,15 @@ export class Seats {
 
   public getSeats(): Record<"E" | "S" | "W" | "N", string | null> {
     return { ...this.clientSeats };
+  }
+
+  public canStart(): boolean {
+    for (const plr of ["E", "S", "W", "N"] as const) {
+      if (this.clientSeats[plr] === null) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public reset(): void {
