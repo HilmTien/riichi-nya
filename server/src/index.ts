@@ -94,6 +94,7 @@ const server = serve({
           case "leave":
             seats.leave(clientMessage.clientId);
             sendSeats();
+            break;
           case "request_client_id":
             ws.send(
               JSON.stringify({
