@@ -48,7 +48,7 @@ export function App() {
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
       <button
         onClick={() =>
-          state.seats.E !== null && state.seats.E === clientId
+          state.seats.E === clientId
             ? sendMessage({ type: "leave", clientId: clientId })
             : sendMessage({ type: "join", clientId: clientId, player: "E" })
         }
@@ -58,7 +58,9 @@ export function App() {
       </button>
       <button
         onClick={() =>
-          sendMessage({ type: "join", clientId: clientId, player: "S" })
+          state.seats.S === clientId
+            ? sendMessage({ type: "leave", clientId: clientId })
+            : sendMessage({ type: "join", clientId: clientId, player: "S" })
         }
         disabled={state.seats.S !== null && state.seats.S !== clientId}
       >
@@ -66,7 +68,9 @@ export function App() {
       </button>
       <button
         onClick={() =>
-          sendMessage({ type: "join", clientId: clientId, player: "W" })
+          state.seats.W === clientId
+            ? sendMessage({ type: "leave", clientId: clientId })
+            : sendMessage({ type: "join", clientId: clientId, player: "W" })
         }
         disabled={state.seats.W !== null && state.seats.W !== clientId}
       >
@@ -74,7 +78,9 @@ export function App() {
       </button>
       <button
         onClick={() =>
-          sendMessage({ type: "join", clientId: clientId, player: "N" })
+          state.seats.N === clientId
+            ? sendMessage({ type: "leave", clientId: clientId })
+            : sendMessage({ type: "join", clientId: clientId, player: "N" })
         }
         disabled={state.seats.N !== null && state.seats.N !== clientId}
       >
