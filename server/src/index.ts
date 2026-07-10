@@ -1,8 +1,11 @@
-import { serve } from "bun";
+import { serve, ServerWebSocket } from "bun";
 import { parseClientMessage } from "./lib/utils";
 import { Timer } from "./timer";
+import { Seats } from "./seats";
 
 const timer = new Timer(10, 60, 10);
+const seats = new Seats();
+const sockets = new Set<ServerWebSocket<unknown>>();
 
 const server = serve({
   port: 8000,
@@ -35,21 +38,34 @@ const server = serve({
       // };
 
       const sendState = () => {
-        ws.send(
-          JSON.stringify({
-            type: "state",
-            currentTurn: timer.getCurrentTurn(),
-            discardTimer: timer.getDiscardTimer(),
-            callTimer: timer.getCallTimer(),
-            extraTimers: timer.getExtraTimers(),
-            extraTimerIsRunning: timer.getExtraTimerIsRunning(),
-            hasStarted: timer.getHasStarted(),
-            state: timer.getState(),
-            callCount: timer.getCallCount(),
-            riichiPlayers: Array.from(timer.getRiichiPlayers()),
-            nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
-          }),
-        );
+        for (const socket of sockets) {
+          socket.send(
+            JSON.stringify({
+              type: "state",
+              currentTurn: timer.getCurrentTurn(),
+              discardTimer: timer.getDiscardTimer(),
+              callTimer: timer.getCallTimer(),
+              extraTimers: timer.getExtraTimers(),
+              extraTimerIsRunning: timer.getExtraTimerIsRunning(),
+              hasStarted: timer.getHasStarted(),
+              state: timer.getState(),
+              callCount: timer.getCallCount(),
+              riichiPlayers: Array.from(timer.getRiichiPlayers()),
+              nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
+            }),
+          );
+        }
+      };
+
+      const sendSeats = () => {
+        for (const socket of sockets) {
+          socket.send(
+            JSON.stringify({
+              type: "seats",
+              seats: seats.getSeats(),
+            }),
+          );
+        }
       };
 
       const onTimeout = sendState;
@@ -62,21 +78,42 @@ const server = serve({
           case "state":
             sendState();
             break;
+          case "seats":
+            sendSeats();
+            break;
           case "join":
+            seats.join(clientMessage.clientId, clientMessage.player);
             ws.send(
               JSON.stringify({
                 type: "set_player",
                 player: clientMessage.player,
               }),
             );
+            sendSeats();
+            break;
+          case "leave":
+            seats.leave(clientMessage.clientId);
+            sendSeats();
+          case "request_client_id":
+            ws.send(
+              JSON.stringify({
+                type: "client_id",
+                id: crypto.randomUUID(),
+              }),
+            );
             break;
           case "start":
+            if (!seats.canStart()) {
+              throw new Error("All four seats must be taken before starting");
+            }
             timer.start(onTimeout);
             sendState();
             break;
           case "reset":
             timer.reset();
+            seats.reset();
             sendState();
+            sendSeats();
             break;
           case "pon":
             timer.call(clientMessage.caller, "pon", onTimeout);
@@ -120,6 +157,7 @@ const server = serve({
       }
     }, // a message is received
     open(ws) {
+      sockets.add(ws);
       ws.send(
         JSON.stringify({
           type: "state",
@@ -137,6 +175,12 @@ const server = serve({
       );
       ws.send(
         JSON.stringify({
+          type: "seats",
+          seats: seats.getSeats(),
+        }),
+      );
+      ws.send(
+        JSON.stringify({
           type: "settings",
           discardTime: timer.getDiscardTime(),
           extraTime: timer.getExtraTime(),
@@ -144,8 +188,10 @@ const server = serve({
         }),
       );
     }, // a socket is opened
-    close(ws, code, message) {}, // a socket is closed
-    drain(ws) {}, // the socket is ready to receive more data
+    close(ws, code, message) {
+      sockets.delete(ws);
+    }, // a socket is closed
+    drain(ws) { }, // the socket is ready to receive more data
   },
 });
 
