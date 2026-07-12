@@ -18,6 +18,7 @@ interface AppState {
   nonMenzenchinPlayers: Set<Player>;
   riichiPlayers: Set<Player>;
   seats: Record<Player, string | null>;
+  skipVotes: number;
 }
 
 export const initialState: AppState = {
@@ -51,6 +52,7 @@ export const initialState: AppState = {
     W: null,
     N: null,
   },
+  skipVotes: 0,
 };
 
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
@@ -82,6 +84,7 @@ export const reducer = (state: AppState, action: ServerMessage): AppState => {
         callCount: action.callCount,
         nonMenzenchinPlayers: new Set(action.nonMenzenchinPlayers),
         riichiPlayers: new Set(action.riichiPlayers),
+        skipVotes: action.skipVotes,
       };
     case "settings":
       return {

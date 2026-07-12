@@ -124,6 +124,10 @@ export class Timer {
     return this.callCount;
   }
 
+  public getSkipVotes(): number {
+    return this.skipVotes.size;
+  }
+
   private setCurrentTurn(turn: "E" | "S" | "W" | "N"): void {
     this.currentTurn = turn;
     this.turnUpdate();

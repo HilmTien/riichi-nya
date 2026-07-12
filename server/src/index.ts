@@ -43,6 +43,7 @@ const server = serve({
               callCount: timer.getCallCount(),
               riichiPlayers: Array.from(timer.getRiichiPlayers()),
               nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
+              skipVotes: timer.getSkipVotes(),
             }),
           );
         }
@@ -167,6 +168,7 @@ const server = serve({
           callCount: timer.getCallCount(),
           riichiPlayers: Array.from(timer.getRiichiPlayers()),
           nonMenzenchinPlayers: Array.from(timer.getNonMenzenchinPlayers()),
+          skipVotes: timer.getSkipVotes(),
         }),
       );
       ws.send(
@@ -187,7 +189,7 @@ const server = serve({
     close(ws, code, message) {
       sockets.delete(ws);
     }, // a socket is closed
-    drain(ws) {}, // the socket is ready to receive more data
+    drain(ws) { }, // the socket is ready to receive more data
   },
 });
 
