@@ -55,4 +55,15 @@ export class Seats {
       N: null,
     };
   }
+
+  public rotateSeats(): void {
+    const newSeats: Record<"E" | "S" | "W" | "N", string | null> = {
+      E: this.clientSeats.N,
+      S: this.clientSeats.E,
+      W: this.clientSeats.S,
+      N: this.clientSeats.W,
+    };
+
+    this.clientSeats = newSeats;
+  }
 }

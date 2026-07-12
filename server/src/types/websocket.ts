@@ -8,6 +8,7 @@ export const ClientMessageSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("state") }),
   z.object({ type: z.literal("start") }),
   z.object({ type: z.literal("reset") }),
+  z.object({ type: z.literal("rotate_seats") }),
   z.object({ type: z.literal("seats") }),
   z.object({
     type: z.literal("join"),

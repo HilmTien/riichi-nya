@@ -46,6 +46,9 @@ export function App() {
     <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
       <button onClick={() => sendMessage({ type: "start" })}>Start</button>
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
+      <button onClick={() => sendMessage({ type: "rotate_seats" })}>
+        Rotate Seats
+      </button>
       <button
         onClick={() =>
           state.seats.E === clientId

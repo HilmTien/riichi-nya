@@ -116,6 +116,10 @@ const server = serve({
             sendState();
             sendSeats();
             break;
+          case "rotate_seats":
+            seats.rotateSeats();
+            sendSeats();
+            break;
           case "pon":
             timer.call(clientMessage.caller, "pon", onTimeout);
             sendState();
@@ -192,7 +196,7 @@ const server = serve({
     close(ws, code, message) {
       sockets.delete(ws);
     }, // a socket is closed
-    drain(ws) { }, // the socket is ready to receive more data
+    drain(ws) {}, // the socket is ready to receive more data
   },
 });
 
