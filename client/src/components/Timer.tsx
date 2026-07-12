@@ -2,6 +2,7 @@ import { useWebSocketContext } from "@/providers/WebSocketProvider";
 import React from "react";
 import { CallActions } from "./CallActions";
 import { DiscardActions } from "./DiscardActions";
+import { useWebSocketContext } from "@/providers/WebSocketProvider";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
@@ -10,6 +11,13 @@ interface TimerProps {
 }
 
 const decrement = (value: number) => (value > 0 ? value - 1 : 0);
+
+const playerToSeat: Record<"E" | "S" | "W" | "N", string> = {
+  E: "East",
+  S: "South",
+  W: "West",
+  N: "North",
+};
 
 export function Timer({
   player,
@@ -79,16 +87,18 @@ export function Timer({
 
   return (
     <div
-      className={`rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
+      className={`h-52 w-120 rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
     >
-      <p>{player}</p>
+      <h1 className="pb-5 text-xl font-semibold">{playerToSeat[player]}</h1>
       {state.state === "discard" && isCurrentTurn ? (
         <div>
           <p>Discard Time: {localDiscardTimer}</p>
           <p>Extra Time: {localExtraTime}</p>
         </div>
-      ) : (
+      ) : state.state === "call" ? (
         <p className="">Call Time: {localCallTimer}</p>
+      ) : (
+        <p>Please wait. Current turn: {playerToSeat[state.currentTurn]}</p>
       )}
       {isCurrentTurn ? (
         <DiscardActions player={player} chiiOrPonCalled={chiiOrPonCalled} />
