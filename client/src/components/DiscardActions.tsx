@@ -21,42 +21,46 @@ export function DiscardActions({
 
   return (
     <div className="flex gap-2">
-      <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${discardDisabled ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={discardDisabled}
-        onClick={() => {
-          sendMessage({ type: "discard", caller: player });
-        }}
-      >
-        Discard
-      </button>
-      <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${forceDiscard ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={forceDiscard}
-        onClick={() => {
-          sendMessage({ type: "tsumo", caller: player });
-        }}
-      >
-        Tsumo
-      </button>
-      <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${disableRiichi ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={disableRiichi}
-        onClick={() => {
-          sendMessage({ type: "riichi", caller: player });
-        }}
-      >
-        Riichi
-      </button>
-      <button
-        className={`rounded bg-white px-1 py-1 text-blue-500 ${disableKan ? "cursor-not-allowed opacity-50" : ""}`}
-        disabled={disableKan}
-        onClick={() => {
-          sendMessage({ type: "kan", caller: player });
-        }}
-      >
-        Kan
-      </button>
+      {!discardDisabled && (
+        <button
+          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          onClick={() => {
+            sendMessage({ type: "discard", caller: player });
+          }}
+        >
+          Discard
+        </button>
+      )}
+      {!forceDiscard && (
+        <button
+          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          onClick={() => {
+            sendMessage({ type: "tsumo", caller: player });
+          }}
+        >
+          Tsumo
+        </button>
+      )}
+      {!disableRiichi && (
+        <button
+          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          onClick={() => {
+            sendMessage({ type: "riichi", caller: player });
+          }}
+        >
+          Riichi
+        </button>
+      )}
+      {!disableKan && (
+        <button
+          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          onClick={() => {
+            sendMessage({ type: "kan", caller: player });
+          }}
+        >
+          Kan
+        </button>
+      )}
     </div>
   );
 }

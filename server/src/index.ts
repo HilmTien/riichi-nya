@@ -28,15 +28,6 @@ const server = serve({
         return;
       }
 
-      // const onTimeout = () => {
-      //   ws.send(
-      //     JSON.stringify({
-      //       type: "set_turn",
-      //       currentTurn: timer.getCurrentTurn(),
-      //     })
-      //   );
-      // };
-
       const sendState = () => {
         for (const socket of sockets) {
           socket.send(

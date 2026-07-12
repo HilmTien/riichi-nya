@@ -30,10 +30,6 @@ export class Seats {
     this.clientLeaveSeat(clientId);
   }
 
-  public getSeat(seat: "E" | "S" | "W" | "N"): string | null {
-    return this.clientSeats[seat];
-  }
-
   public getSeats(): Record<"E" | "S" | "W" | "N", string | null> {
     return { ...this.clientSeats };
   }

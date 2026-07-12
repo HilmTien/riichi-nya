@@ -186,8 +186,8 @@ export class Timer {
   }
 
   public start(onTimeout: () => void): void {
+    this.reset();
     this.hasStarted = true;
-    this.setCurrentTurn("E");
     this.startDiscardTimer(onTimeout);
   }
 
