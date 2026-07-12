@@ -26,7 +26,6 @@ export function App() {
   return state.hasStarted ? (
     <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
       <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
-      <GlobalTimer />
       {currentSeat ? (
         <Timer
           player={currentSeat}
