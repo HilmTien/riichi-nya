@@ -91,14 +91,24 @@ export function Timer({
     >
       <h1 className="pb-5 text-xl font-semibold">{playerToSeat[player]}</h1>
       {state.state === "discard" && isCurrentTurn ? (
-        <div>
-          <p>Discard Time: {localDiscardTimer}</p>
-          <p>Extra Time: {localExtraTime}</p>
-        </div>
+        <p className="font-semibold">
+          {localDiscardTimer !== 0 && (
+            <span className="text-5xl">{localDiscardTimer}</span>
+          )}
+          <span className="from-extra-time-top to-extra-time-bottom bg-linear-to-b bg-clip-text text-3xl text-transparent">
+            {localDiscardTimer !== 0 ? "+" : ""}
+            {localExtraTime}
+          </span>
+        </p>
       ) : state.state === "call" ? (
-        <p className="">Call Time: {localCallTimer}</p>
+        <p className="text-5xl font-semibold">{localCallTimer}</p>
       ) : (
-        <p>Please wait. Current turn: {playerToSeat[state.currentTurn]}</p>
+        <div className="">
+          <h2 className="text-2xl font-semibold">
+            Current turn: {playerToSeat[state.currentTurn]}
+          </h2>
+          <h1 className="text-lg">Please wait.</h1>
+        </div>
       )}
       {isCurrentTurn ? (
         <DiscardActions player={player} chiiOrPonCalled={chiiOrPonCalled} />

@@ -89,4 +89,7 @@ body::before {
   --color-pon-dark: #064863;
   --color-pon-text-top: #5fc7d9;
   --color-pon-stroke: #104d69;
+
+  --color-extra-time-top: #f6d66b;
+  --color-extra-time-bottom: #ed9b5d;
 }
