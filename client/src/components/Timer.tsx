@@ -101,7 +101,10 @@ export function Timer({
           </span>
         </p>
       ) : state.state === "call" ? (
-        <p className="text-5xl font-semibold">{localCallTimer}</p>
+        <div className="flex flex-col gap-1">
+          <p className="text-5xl font-semibold">{localCallTimer}</p>
+          {isCurrentTurn && <p>Waiting for other players to call.</p>}
+        </div>
       ) : (
         <div className="">
           <h2 className="text-2xl font-semibold">
