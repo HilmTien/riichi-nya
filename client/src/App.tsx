@@ -5,6 +5,7 @@ import "./index.css";
 import { useWebSocketContext } from "./providers/WebSocketProvider";
 import { Timer } from "./components/Timer";
 import { SpectateTimer } from "./components/SpectateTimer";
+import { LobbySeat } from "./components/LobbySeat";
 
 const players = ["E", "S", "W", "N"] as const;
 
@@ -28,10 +29,11 @@ export function App() {
   }
 
   const currentSeat = players.find((plr) => state.seats[plr] === clientId);
+  const seatsFilled =
+    state.seats.E && state.seats.S && state.seats.W && state.seats.N;
 
   return state.hasStarted ? (
     <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
-      <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
       {currentSeat ? (
         <Timer
           player={currentSeat}
@@ -47,53 +49,41 @@ export function App() {
         </div>
       )}
       {state.skipVotes !== 0 && <p>Skip votes: {state.skipVotes} / 3</p>}
+      <button
+        onClick={() => sendMessage({ type: "reset" })}
+        className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400"
+      >
+        Reset
+      </button>
     </div>
   ) : (
-    <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
-      <button onClick={() => sendMessage({ type: "start" })}>Start</button>
-      <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
-      <button onClick={() => sendMessage({ type: "rotate_seats" })}>
+    <div className="relative z-10 flex flex-col items-center gap-4 p-8 text-center">
+      <h1 className="text-2xl font-semibold">Lobby</h1>
+      <div className="grid grid-cols-2 gap-2">
+        <LobbySeat seat="E" />
+        <LobbySeat seat="S" />
+        <LobbySeat seat="W" />
+        <LobbySeat seat="N" />
+      </div>
+      <div className="flex justify-center gap-10">
+        <button
+          onClick={() => sendMessage({ type: "start" })}
+          className={`w-20 rounded border border-white bg-green-400 font-semibold text-black ${seatsFilled ? "cursor-pointer hover:bg-green-300" : "opacity-50"}`}
+        >
+          Start
+        </button>
+        <button
+          onClick={() => sendMessage({ type: "reset" })}
+          className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400"
+        >
+          Reset
+        </button>
+      </div>
+      <button
+        onClick={() => sendMessage({ type: "rotate_seats" })}
+        className="w-32 cursor-pointer rounded border border-white bg-indigo-500 font-semibold hover:bg-indigo-400"
+      >
         Rotate Seats
-      </button>
-      <button
-        onClick={() =>
-          state.seats.E === clientId
-            ? sendMessage({ type: "leave", clientId: clientId })
-            : sendMessage({ type: "join", clientId: clientId, player: "E" })
-        }
-        disabled={state.seats.E !== null && state.seats.E !== clientId}
-      >
-        East {state.seats.E}
-      </button>
-      <button
-        onClick={() =>
-          state.seats.S === clientId
-            ? sendMessage({ type: "leave", clientId: clientId })
-            : sendMessage({ type: "join", clientId: clientId, player: "S" })
-        }
-        disabled={state.seats.S !== null && state.seats.S !== clientId}
-      >
-        South {state.seats.S}
-      </button>
-      <button
-        onClick={() =>
-          state.seats.W === clientId
-            ? sendMessage({ type: "leave", clientId: clientId })
-            : sendMessage({ type: "join", clientId: clientId, player: "W" })
-        }
-        disabled={state.seats.W !== null && state.seats.W !== clientId}
-      >
-        West {state.seats.W}
-      </button>
-      <button
-        onClick={() =>
-          state.seats.N === clientId
-            ? sendMessage({ type: "leave", clientId: clientId })
-            : sendMessage({ type: "join", clientId: clientId, player: "N" })
-        }
-        disabled={state.seats.N !== null && state.seats.N !== clientId}
-      >
-        North {state.seats.N}
       </button>
     </div>
   );

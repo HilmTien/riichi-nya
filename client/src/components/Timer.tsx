@@ -3,6 +3,7 @@ import React from "react";
 import { CallActions } from "./CallActions";
 import { DiscardActions } from "./DiscardActions";
 import { useWebSocketContext } from "@/providers/WebSocketProvider";
+import { playerToSeat } from "@/lib/utils";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
@@ -11,13 +12,6 @@ interface TimerProps {
 }
 
 const decrement = (value: number) => (value > 0 ? value - 1 : 0);
-
-const playerToSeat: Record<"E" | "S" | "W" | "N", string> = {
-  E: "East",
-  S: "South",
-  W: "West",
-  N: "North",
-};
 
 export function Timer({
   player,
