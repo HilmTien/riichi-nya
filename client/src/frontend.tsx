@@ -13,7 +13,7 @@ import { WebSocketProvider } from "./providers/WebSocketProvider";
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <WebSocketProvider url="ws://localhost:8000">
+    <WebSocketProvider url={process.env.NODE_ENV === "production" ? "wss://riichi.osunorge.no/ws" : "ws://localhost:8080/ws"}>
       <App />
     </WebSocketProvider>
   </StrictMode>

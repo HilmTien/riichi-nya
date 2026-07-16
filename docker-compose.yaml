@@ -1,0 +1,22 @@
+services:
+  server:
+    container_name: riichi-nya-server
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    networks:
+      - caddy_network
+  
+  client:
+    container_name: riichi-nya-client
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    networks:
+      - caddy_network
+    depends_on:
+      - server
+
+networks:
+  caddy_network:
+    external: true
