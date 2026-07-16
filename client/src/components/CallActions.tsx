@@ -12,7 +12,8 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
   const [hasSkipped, setHasSkipped] = React.useState(false);
 
   const disabled = state.state !== "call" || !state.hasStarted;
-  const callDisabled = state.callCount[player] >= 4 || disabled;
+  const callDisabled =
+    state.callCount[player] >= 4 || state.riichiPlayers.has(player) || disabled;
 
   React.useEffect(() => {
     setHasSkipped(false);
