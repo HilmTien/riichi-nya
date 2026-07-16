@@ -95,9 +95,9 @@ const server = serve({
             );
             break;
           case "start":
-            if (!seats.canStart()) {
-              throw new Error("All four seats must be taken before starting");
-            }
+            // if (!seats.canStart()) {
+            //   throw new Error("All four seats must be taken before starting");
+            // }
             timer.start(onTimeout);
             sendState();
             break;

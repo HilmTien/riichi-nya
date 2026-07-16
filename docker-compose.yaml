@@ -6,7 +6,7 @@ services:
       dockerfile: server/Dockerfile
     networks:
       - caddy_network
-  
+
   client:
     container_name: riichi-nya-client
     build:
