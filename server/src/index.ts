@@ -1,7 +1,7 @@
 import { serve, ServerWebSocket } from "bun";
 import { parseClientMessage } from "./lib/utils";
-import { Timer } from "./timer";
 import { Seats } from "./seats";
+import { Timer } from "./timer";
 
 const timer = new Timer(10, 60, 10);
 const seats = new Seats();
@@ -64,7 +64,7 @@ const server = serve({
       try {
         switch (clientMessage.type) {
           case "ping":
-            ws.send(JSON.stringify({ type: "pong", timestamp: Date.now() }));
+            ws.send(JSON.stringify({ type: "pong" }));
             break;
           case "state":
             sendState();

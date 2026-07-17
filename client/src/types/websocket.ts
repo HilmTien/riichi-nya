@@ -3,7 +3,7 @@ import z from "zod";
 const player = ["E", "S", "W", "N"] as const;
 
 export const ServerMessageSchema = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("pong"), timestamp: z.number() }),
+  z.object({ type: z.literal("pong") }),
   z.object({
     type: z.literal("state"),
     currentTurn: z.enum(player),

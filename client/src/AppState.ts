@@ -12,7 +12,6 @@ interface AppState {
   extraTimerIsRunning: boolean;
   discardTimer: number;
   callTimer: number;
-  latency?: number;
   hasStarted: boolean;
   state: "call" | "discard";
   callCount: Record<Player, number>;
@@ -36,7 +35,6 @@ export const initialState: AppState = {
     N: 60,
   },
   extraTimerIsRunning: false,
-  latency: undefined,
   hasStarted: false,
   state: "discard",
   callCount: {
@@ -58,7 +56,7 @@ export const initialState: AppState = {
 export const reducer = (state: AppState, action: ServerMessage): AppState => {
   switch (action.type) {
     case "pong":
-      return { ...state, latency: Date.now() - action.timestamp };
+      return state;
     case "client_id":
       return state;
     case "set_player":
