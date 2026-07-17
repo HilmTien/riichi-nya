@@ -1,8 +1,7 @@
+import { useWebSocketContext } from "@/providers/WebSocketProvider";
 import React from "react";
 import { CallActions } from "./CallActions";
 import { DiscardActions } from "./DiscardActions";
-import { useWebSocketContext } from "@/providers/WebSocketProvider";
-import { GlobalTimer } from "./GlobalTimer";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
