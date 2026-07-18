@@ -19,8 +19,7 @@ export function InGameDisplay() {
   const currentSeat = players.find((plr) => state.seats[plr] === clientId);
 
   return (
-    <>
-      <button onClick={() => sendMessage({ type: "reset" })}>Reset</button>
+    <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
       {currentSeat ? (
         <Timer
           player={currentSeat}
@@ -35,6 +34,13 @@ export function InGameDisplay() {
           <SpectateTimer player={"N"} />
         </div>
       )}
-    </>
+      {state.skipVotes !== 0 && <p>Skip votes: {state.skipVotes} / 3</p>}
+      <button
+        onClick={() => sendMessage({ type: "reset" })}
+        className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400"
+      >
+        Reset
+      </button>
+    </div>
   );
 }
