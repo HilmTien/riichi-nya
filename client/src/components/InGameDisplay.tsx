@@ -39,7 +39,9 @@ export function InGameDisplay() {
           </div>
         </div>
       )}
-      {state.skipVotes !== 0 && <p>Skip votes: {state.skipVotes} / 3</p>}
+      <p className={state.skipVotes === 0 ? "invisible" : "visible"}>
+        Skip votes: {state.skipVotes} / 3
+      </p>
       <button
         onClick={() => sendMessage({ type: "reset" })}
         className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400"
