@@ -25,20 +25,20 @@ export function PreGameDisplay() {
       <div className="flex justify-center gap-10">
         <button
           onClick={() => sendMessage({ type: "start" })}
-          className={`w-20 rounded border border-white bg-green-400 text-lg font-semibold text-black sm:text-2xl ${seatsFilled ? "cursor-pointer hover:bg-green-300" : "opacity-50"}`}
+          className={`w-20 rounded border border-white bg-green-400 text-lg font-semibold text-black sm:text-2xl ${seatsFilled ? "cursor-pointer hover:bg-green-300 active:bg-green-300" : "opacity-50"}`}
         >
           Start
         </button>
         <button
           onClick={() => sendMessage({ type: "reset" })}
-          className="w-20 cursor-pointer rounded border border-white bg-red-500 text-lg font-semibold hover:bg-red-400 sm:text-2xl"
+          className="w-20 cursor-pointer rounded border border-white bg-red-500 text-lg font-semibold hover:bg-red-400 active:bg-red-400 sm:text-2xl"
         >
           Reset
         </button>
       </div>
       <button
         onClick={() => sendMessage({ type: "rotate_seats" })}
-        className="w-48 cursor-pointer rounded border border-white bg-indigo-500 text-lg font-semibold hover:bg-indigo-400"
+        className="w-48 cursor-pointer rounded border border-white bg-indigo-500 text-lg font-semibold hover:bg-indigo-400 active:bg-indigo-400"
       >
         Rotate Seats
       </button>

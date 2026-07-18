@@ -44,7 +44,7 @@ export function InGameDisplay() {
       </p>
       <button
         onClick={() => sendMessage({ type: "reset" })}
-        className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400"
+        className="w-20 cursor-pointer rounded border border-white bg-red-500 font-semibold hover:bg-red-400 active:bg-red-400"
       >
         Reset
       </button>

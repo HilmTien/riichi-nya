@@ -23,7 +23,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
     <div className="mt-10 flex justify-center gap-2">
       {!callDisabled && (
         <button
-          className={`from-pon-light to-pon-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-pon-light to-pon-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             sendMessage({ type: "pon", caller: player });
             setChiiOrPonCalled(true);
@@ -37,7 +37,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!callDisabled && nextTurn(state.currentTurn) === player && (
         <button
-          className={`from-chii-light to-chii-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-chii-light to-chii-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             sendMessage({ type: "chii", caller: player });
             setChiiOrPonCalled(true);
@@ -50,7 +50,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!callDisabled && (
         <button
-          className={`from-kan-light to-kan-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-kan-light to-kan-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             sendMessage({ type: "kan", caller: player });
           }}
@@ -63,7 +63,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!disabled && (
         <button
-          className={`from-ron-light to-ron-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-ron-light to-ron-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             sendMessage({ type: "ron", caller: player });
           }}
@@ -76,7 +76,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!disabled && (
         <button
-          className={`from-discard-light to-discard-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-discard-light to-discard-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
           onClick={() => {
             sendMessage({ type: "skip", caller: player });
             setHasSkipped(true);
