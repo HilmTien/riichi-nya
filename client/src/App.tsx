@@ -83,7 +83,7 @@ export function App() {
       </div>
       <button
         onClick={() => sendMessage({ type: "rotate_seats" })}
-        className="w-48 cursor-pointer rounded border border-white bg-indigo-500 text-lg text-xl font-semibold hover:bg-indigo-400"
+        className="w-48 cursor-pointer rounded border border-white bg-indigo-500 text-lg font-semibold hover:bg-indigo-400"
       >
         Rotate Seats
       </button>

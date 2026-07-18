@@ -20,7 +20,7 @@ export function DiscardActions({
   const disableKan = forceDiscard || state.callCount[player] >= 4;
 
   return (
-    <div className="mt-10 flex justify-center gap-2">
+    <div className="flex justify-center gap-2">
       {!disableKan && (
         <button
           className={
@@ -30,7 +30,7 @@ export function DiscardActions({
             sendMessage({ type: "kan", caller: player });
           }}
         >
-          <span className="from-kan-text-top to-kan-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+          <span className="from-kan-text-top to-kan-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
             Kan
           </span>
         </button>
@@ -44,7 +44,7 @@ export function DiscardActions({
             sendMessage({ type: "tsumo", caller: player });
           }}
         >
-          <span className="from-tsumo-text-top to-tsumo-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+          <span className="from-tsumo-text-top to-tsumo-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
             Tsumo
           </span>
         </button>
@@ -58,7 +58,7 @@ export function DiscardActions({
             sendMessage({ type: "riichi", caller: player });
           }}
         >
-          <span className="from-riichi-text-top to-riichi-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+          <span className="from-riichi-text-top to-riichi-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
             Riichi
           </span>
         </button>
@@ -72,7 +72,7 @@ export function DiscardActions({
             sendMessage({ type: "discard", caller: player });
           }}
         >
-          <span className="from-discard-text-top bg-linear-to-b to-white bg-clip-text text-2xl font-semibold text-transparent">
+          <span className="from-discard-text-top bg-linear-to-b to-white bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
             Discard
           </span>
         </button>
