@@ -19,7 +19,7 @@ export function InGameDisplay() {
   const currentSeat = players.find((plr) => state.seats[plr] === clientId);
 
   return (
-    <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
+    <div className="relative z-10 flex flex-col items-center gap-4 p-8">
       {currentSeat ? (
         <Timer
           player={currentSeat}
@@ -28,10 +28,15 @@ export function InGameDisplay() {
         />
       ) : (
         <div className="relative z-10 flex flex-col gap-4 p-8 text-center">
-          <SpectateTimer player={"E"} />
-          <SpectateTimer player={"S"} />
-          <SpectateTimer player={"W"} />
-          <SpectateTimer player={"N"} />
+          <h1 className="text-2xl font-semibold">Spectator</h1>
+          <div className="flex flex-col items-center gap-10">
+            <SpectateTimer player="W" />
+            <div className="flex gap-40">
+              <SpectateTimer player="N" />
+              <SpectateTimer player="S" />
+            </div>
+            <SpectateTimer player="E" />
+          </div>
         </div>
       )}
       {state.skipVotes !== 0 && <p>Skip votes: {state.skipVotes} / 3</p>}

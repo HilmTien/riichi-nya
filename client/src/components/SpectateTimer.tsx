@@ -1,5 +1,6 @@
 import React from "react";
 import { useWebSocketContext } from "@/providers/WebSocketProvider";
+import { playerToSeat } from "@/lib/utils";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
@@ -41,10 +42,9 @@ export function SpectateTimer({ player }: TimerProps) {
     <div
       className={`rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
     >
-      <p>{player}</p>
-      <p>Server timer: {state.extraTimers[player]}</p>
-      <p>Local timer: {localExtraTime}</p>
-      <p>Call count: {state.callCount[player]}</p>
+      <h2 className="pb-2 text-lg font-semibold">{playerToSeat[player]}</h2>
+      <p>Local Time: {localExtraTime}</p>
+      <p>Call Count: {state.callCount[player]}</p>
     </div>
   );
 }
