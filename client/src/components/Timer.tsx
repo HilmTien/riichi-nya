@@ -83,7 +83,7 @@ export function Timer({
     <div
       className={`h-52 w-120 rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
     >
-      <h1 className="pb-5 text-xl font-semibold">{playerToSeat[player]}</h1>
+      <h1 className="pb-5 text-2xl font-semibold">{playerToSeat[player]}</h1>
       {state.state === "discard" && isCurrentTurn ? (
         <p className="font-semibold">
           {localDiscardTimer !== 0 && (

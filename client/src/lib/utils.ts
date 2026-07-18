@@ -25,8 +25,8 @@ export const nextTurn = (
 };
 
 export const playerToSeat: Record<"E" | "S" | "W" | "N", string> = {
-  E: "East",
-  S: "South",
-  W: "West",
-  N: "North",
+  E: "東 (East)",
+  S: "南 (South)",
+  W: "西 (West)",
+  N: "北 (North)",
 };

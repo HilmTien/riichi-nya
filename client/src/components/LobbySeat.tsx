@@ -20,7 +20,7 @@ export function LobbySeat({ seat }: LobbySeatProps) {
           : sendMessage({ type: "join", clientId: clientId, player: seat })
       }
       disabled={state.seats[seat] !== null && state.seats[seat] !== clientId}
-      className={`w-32 rounded bg-amber-300 text-lg text-black ${state.seats[seat] === clientId
+      className={`h-14 w-20 rounded bg-amber-300 text-sm text-black sm:w-32 sm:text-2xl ${state.seats[seat] === clientId
           ? "cursor-pointer border border-white bg-blue-200 font-semibold hover:bg-blue-100"
           : state.seats[seat] !== null
             ? "opacity-50"
