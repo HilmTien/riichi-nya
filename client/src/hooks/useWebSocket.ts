@@ -10,7 +10,7 @@ export const useWebSocket = (url: string) => {
     localStorage.getItem("clientId"),
   );
   const [ping, setPing] = useState<number>(-1);
-  const [now, setNow] = useState<number>(Date.now());
+  const nowRef = useRef<number>(Date.now());
 
   useEffect(() => {
     const socket = new WebSocket(url);
@@ -29,14 +29,10 @@ export const useWebSocket = (url: string) => {
     socket.addEventListener("message", (event: MessageEvent<string>) => {
       const message = parseServerMessage(event.data);
 
-      if (message?.type !== "pong") {
-        console.log(message);
-      }
-
       if (message) {
         switch (message.type) {
           case "pong":
-            const ping = Date.now() - now;
+            const ping = Date.now() - nowRef.current;
             setPing(ping);
             break;
           case "client_id":
@@ -72,7 +68,7 @@ export const useWebSocket = (url: string) => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setNow(Date.now());
+      nowRef.current = Date.now();
       sendMessage({ type: "ping" });
     }, 5000);
 
