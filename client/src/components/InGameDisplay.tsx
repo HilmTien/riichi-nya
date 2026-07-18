@@ -6,7 +6,7 @@ import { Timer } from "./Timer";
 const players = ["E", "S", "W", "N"] as const;
 
 export function InGameDisplay() {
-  const { state, sendMessage, clientId } = useWebSocketContext();
+  const { state, clientId } = useWebSocketContext();
 
   const [chiiOrPonCalled, setChiiOrPonCalled] = React.useState(false);
 
@@ -31,7 +31,7 @@ export function InGameDisplay() {
           <h1 className="text-2xl font-semibold">Spectator</h1>
           <div className="flex flex-col items-center gap-10">
             <SpectateTimer player="W" />
-            <div className="flex gap-40">
+            <div className="flex flex-col gap-10 sm:flex-row sm:gap-40">
               <SpectateTimer player="N" />
               <SpectateTimer player="S" />
             </div>

@@ -40,7 +40,7 @@ export function SpectateTimer({ player }: TimerProps) {
 
   return (
     <div
-      className={`rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
+      className={`w-32 rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
     >
       <h2 className="pb-2 text-lg font-semibold">{playerToSeat[player]}</h2>
       <p>Local Time: {localExtraTime}</p>
