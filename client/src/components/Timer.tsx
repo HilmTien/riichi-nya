@@ -80,7 +80,7 @@ export function Timer({
 
   return (
     <div
-      className={`w-74 rounded bg-blue-500 p-4 text-sm text-white sm:h-64 sm:w-140 ${isCurrentTurn ? "outline-3" : ""}`}
+      className={`mt-10 w-74 rounded bg-blue-500 p-4 text-sm text-white sm:h-64 sm:w-140 ${isCurrentTurn ? "outline-3" : ""}`}
     >
       <h1 className="pb-5 text-2xl font-semibold">{playerToSeat[player]}</h1>
       <div className="mb-20">
