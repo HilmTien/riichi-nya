@@ -39,9 +39,6 @@ export function InGameDisplay() {
           </div>
         </div>
       )}
-      <p className={state.skipVotes === 0 ? "invisible" : "visible"}>
-        Skip votes: {state.skipVotes} / 3
-      </p>
     </div>
   );
 }

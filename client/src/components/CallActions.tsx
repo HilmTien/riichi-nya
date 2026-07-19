@@ -20,10 +20,10 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
   }, [state.currentTurn]);
 
   return (
-    <div className="mt-10 flex justify-center gap-2">
+    <div className="flex justify-center gap-2">
       {!callDisabled && (
         <button
-          className={`from-pon-light to-pon-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-pon-light to-pon-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-110 active:scale-95 active:brightness-110"}`}
           onClick={() => {
             sendMessage({ type: "pon", caller: player });
             setChiiOrPonCalled(true);
@@ -37,11 +37,12 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!callDisabled && nextTurn(state.currentTurn) === player && (
         <button
-          className={`from-chii-light to-chii-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-chii-light to-chii-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-110 active:scale-95 active:brightness-110"}`}
           onClick={() => {
             sendMessage({ type: "chii", caller: player });
             setChiiOrPonCalled(true);
           }}
+          disabled={hasSkipped}
         >
           <span className="from-chii-text-top to-chii-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
             Chii
@@ -50,7 +51,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!callDisabled && (
         <button
-          className={`from-kan-light to-kan-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-kan-light to-kan-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "kan", caller: player });
           }}
@@ -63,7 +64,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!disabled && (
         <button
-          className={`from-ron-light to-ron-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-ron-light to-ron-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "ron", caller: player });
           }}
@@ -76,7 +77,7 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
       )}
       {!disabled && (
         <button
-          className={`from-discard-light to-discard-dark w-36 rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95 ${hasSkipped ? "opacity-50" : "cursor-pointer"}`}
+          className={`from-discard-light to-discard-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "skip", caller: player });
             setHasSkipped(true);

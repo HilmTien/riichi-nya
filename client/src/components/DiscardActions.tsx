@@ -24,7 +24,7 @@ export function DiscardActions({
       {!disableKan && (
         <button
           className={
-            "from-kan-light to-kan-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95"
+            "from-kan-light to-kan-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
           }
           onClick={() => {
             sendMessage({ type: "kan", caller: player });
@@ -38,7 +38,7 @@ export function DiscardActions({
       {!forceDiscard && (
         <button
           className={
-            "from-tsumo-light to-tsumo-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95"
+            "from-tsumo-light to-tsumo-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
           }
           onClick={() => {
             sendMessage({ type: "tsumo", caller: player });
@@ -52,7 +52,7 @@ export function DiscardActions({
       {!disableRiichi && (
         <button
           className={
-            "from-riichi-light to-riichi-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95"
+            "from-riichi-light to-riichi-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
           }
           onClick={() => {
             sendMessage({ type: "riichi", caller: player });
@@ -66,7 +66,7 @@ export function DiscardActions({
       {!discardDisabled && (
         <button
           className={
-            "from-discard-light to-discard-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 active:scale-95 active:brightness-95"
+            "from-discard-light to-discard-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
           }
           onClick={() => {
             sendMessage({ type: "discard", caller: player });

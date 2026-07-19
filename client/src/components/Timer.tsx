@@ -83,7 +83,7 @@ export function Timer({
       className={`mt-10 w-74 rounded bg-blue-500 p-4 text-sm text-white sm:h-64 sm:w-140 ${isCurrentTurn ? "outline-3" : ""}`}
     >
       <h1 className="pb-5 text-2xl font-semibold">{playerToSeat[player]}</h1>
-      <div className="mb-20">
+      <div>
         {state.state === "discard" && isCurrentTurn ? (
           <p className="h-12 font-semibold">
             {localDiscardTimer !== 0 && (
@@ -108,6 +108,11 @@ export function Timer({
           </div>
         )}
       </div>
+      <p
+        className={`flex h-20 items-center justify-center ${state.skipVotes === 0 ? "invisible" : "visible"}`}
+      >
+        Skip votes: {state.skipVotes} / 3
+      </p>
       {isCurrentTurn ? (
         <DiscardActions player={player} chiiOrPonCalled={chiiOrPonCalled} />
       ) : (
