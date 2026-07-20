@@ -23,3 +23,10 @@ export const nextTurn = (
   const nextIndex = (currentIndex + 1) % turns.length;
   return turns[nextIndex]!;
 };
+
+export const playerToSeat: Record<"E" | "S" | "W" | "N", string> = {
+  E: "東 (East)",
+  S: "南 (South)",
+  W: "西 (West)",
+  N: "北 (North)",
+};

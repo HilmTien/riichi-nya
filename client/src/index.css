@@ -48,3 +48,48 @@ body::before {
     animation: none !important;
   }
 }
+
+@theme {
+  --color-discard-light: #3d3c3c;
+  --color-discard-dark: #302c26;
+  --color-discard-text-top: #aeaca7;
+  --color-discard-stroke: #302c26;
+
+  --color-riichi-light: #d4652d;
+  --color-riichi-dark: #7f3820;
+  --color-riichi-text-top: #f592b1;
+  --color-riichi-text-bottom: #f8f7cc;
+  --color-riichi-stroke: #863a17;
+
+  --color-tsumo-light: #b8355d;
+  --color-tsumo-dark: #621633;
+  --color-tsumo-text-top: #f46d8f;
+  --color-tsumo-text-bottom: #f8f7cc;
+  --color-tsumo-stroke: #510e13;
+
+  --color-kan-light: #aa4a98;
+  --color-kan-dark: #6c2f63;
+  --color-kan-text-top: #d671ad;
+  --color-kan-text-bottom: #dbc4df;
+  --color-kan-stroke: #38103a;
+
+  --color-ron-light: #b1393d;
+  --color-ron-dark: #661617;
+  --color-ron-text-top: #e9784f;
+  --color-ron-text-bottom: #eed0a5;
+  --color-ron-stroke: #622a33;
+
+  --color-chii-light: #489591;
+  --color-chii-dark: #1f5535;
+  --color-chii-text-top: #66d4ad;
+  --color-chii-text-bottom: #b4d0b4;
+  --color-chii-stroke: #0d3f23;
+
+  --color-pon-light: #1c92c5;
+  --color-pon-dark: #064863;
+  --color-pon-text-top: #5fc7d9;
+  --color-pon-stroke: #104d69;
+
+  --color-extra-time-top: #f6d66b;
+  --color-extra-time-bottom: #ed9b5d;
+}

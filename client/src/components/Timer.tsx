@@ -1,7 +1,8 @@
-import { useWebSocketContext } from "@/providers/WebSocketProvider";
 import React from "react";
 import { CallActions } from "./CallActions";
 import { DiscardActions } from "./DiscardActions";
+import { useWebSocketContext } from "@/providers/WebSocketProvider";
+import { playerToSeat } from "@/lib/utils";
 
 interface TimerProps {
   player: "E" | "S" | "W" | "N";
@@ -79,17 +80,39 @@ export function Timer({
 
   return (
     <div
-      className={`rounded bg-blue-500 p-4 text-sm text-white ${isCurrentTurn ? "outline-3" : ""}`}
+      className={`mt-10 w-74 rounded bg-blue-500 p-4 text-sm text-white sm:h-64 sm:w-140 ${isCurrentTurn ? "outline-3" : ""}`}
     >
-      <p>{player}</p>
-      {state.state === "discard" && isCurrentTurn ? (
-        <div>
-          <p>Discard Time: {localDiscardTimer}</p>
-          <p>Extra Time: {localExtraTime}</p>
-        </div>
-      ) : (
-        <p className="">Call Time: {localCallTimer}</p>
-      )}
+      <h1 className="pb-5 text-2xl font-semibold">{playerToSeat[player]}</h1>
+      <div>
+        {state.state === "discard" && isCurrentTurn ? (
+          <p className="h-12 font-semibold">
+            {localDiscardTimer !== 0 && (
+              <span className="text-5xl">{localDiscardTimer}</span>
+            )}
+            <span className="from-extra-time-top to-extra-time-bottom bg-linear-to-b bg-clip-text text-3xl text-transparent">
+              {localDiscardTimer !== 0 ? "+" : ""}
+              {localExtraTime}
+            </span>
+          </p>
+        ) : state.state === "call" ? (
+          <div className="flex flex-col gap-1">
+            <p className="text-5xl font-semibold">{localCallTimer}</p>
+            {isCurrentTurn && <p>Waiting for other players to call.</p>}
+          </div>
+        ) : (
+          <div className="">
+            <h2 className="text-2xl font-semibold">
+              Current turn: {playerToSeat[state.currentTurn]}
+            </h2>
+            <h1 className="text-lg">Please wait.</h1>
+          </div>
+        )}
+      </div>
+      <p
+        className={`flex h-20 items-center justify-center ${state.skipVotes === 0 ? "invisible" : "visible"}`}
+      >
+        Skip votes: {state.skipVotes} / 3
+      </p>
       {isCurrentTurn ? (
         <DiscardActions player={player} chiiOrPonCalled={chiiOrPonCalled} />
       ) : (

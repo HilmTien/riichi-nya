@@ -20,45 +20,61 @@ export function DiscardActions({
   const disableKan = forceDiscard || state.callCount[player] >= 4;
 
   return (
-    <div className="flex gap-2">
-      {!discardDisabled && (
-        <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
-          onClick={() => {
-            sendMessage({ type: "discard", caller: player });
-          }}
-        >
-          Discard
-        </button>
-      )}
-      {!forceDiscard && (
-        <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
-          onClick={() => {
-            sendMessage({ type: "tsumo", caller: player });
-          }}
-        >
-          Tsumo
-        </button>
-      )}
-      {!disableRiichi && (
-        <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
-          onClick={() => {
-            sendMessage({ type: "riichi", caller: player });
-          }}
-        >
-          Riichi
-        </button>
-      )}
+    <div className="flex justify-center gap-2">
       {!disableKan && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={
+            "from-kan-light to-kan-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
+          }
           onClick={() => {
             sendMessage({ type: "kan", caller: player });
           }}
         >
-          Kan
+          <span className="from-kan-text-top to-kan-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
+            Kan
+          </span>
+        </button>
+      )}
+      {!forceDiscard && (
+        <button
+          className={
+            "from-tsumo-light to-tsumo-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
+          }
+          onClick={() => {
+            sendMessage({ type: "tsumo", caller: player });
+          }}
+        >
+          <span className="from-tsumo-text-top to-tsumo-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
+            Tsumo
+          </span>
+        </button>
+      )}
+      {!disableRiichi && (
+        <button
+          className={
+            "from-riichi-light to-riichi-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
+          }
+          onClick={() => {
+            sendMessage({ type: "riichi", caller: player });
+          }}
+        >
+          <span className="from-riichi-text-top to-riichi-text-bottom bg-linear-to-b bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
+            Riichi
+          </span>
+        </button>
+      )}
+      {!discardDisabled && (
+        <button
+          className={
+            "from-discard-light to-discard-dark w-36 cursor-pointer rounded bg-linear-to-r px-1 py-1 hover:brightness-120 active:scale-95 active:brightness-120"
+          }
+          onClick={() => {
+            sendMessage({ type: "discard", caller: player });
+          }}
+        >
+          <span className="from-discard-text-top bg-linear-to-b to-white bg-clip-text text-lg font-semibold text-transparent sm:text-2xl">
+            Discard
+          </span>
         </button>
       )}
     </div>

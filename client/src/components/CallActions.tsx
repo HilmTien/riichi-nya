@@ -20,62 +20,73 @@ export function CallActions({ player, setChiiOrPonCalled }: CallActionsProps) {
   }, [state.currentTurn]);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex justify-center gap-2">
       {!callDisabled && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={`from-pon-light to-pon-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-110 active:scale-95 active:brightness-110"}`}
           onClick={() => {
             sendMessage({ type: "pon", caller: player });
             setChiiOrPonCalled(true);
           }}
           disabled={hasSkipped}
         >
-          Pon
+          <span className="from-pon-text-top bg-linear-to-b to-white bg-clip-text text-2xl font-semibold text-transparent">
+            Pon
+          </span>
         </button>
       )}
       {!callDisabled && nextTurn(state.currentTurn) === player && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={`from-chii-light to-chii-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-110 active:scale-95 active:brightness-110"}`}
           onClick={() => {
             sendMessage({ type: "chii", caller: player });
             setChiiOrPonCalled(true);
           }}
+          disabled={hasSkipped}
         >
-          Chii
+          <span className="from-chii-text-top to-chii-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+            Chii
+          </span>
         </button>
       )}
       {!callDisabled && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={`from-kan-light to-kan-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "kan", caller: player });
           }}
           disabled={hasSkipped}
         >
-          Kan
+          <span className="from-kan-text-top to-kan-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+            Kan
+          </span>
         </button>
       )}
       {!disabled && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={`from-ron-light to-ron-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "ron", caller: player });
           }}
           disabled={hasSkipped}
         >
-          Ron
+          <span className="from-ron-text-top to-ron-text-bottom bg-linear-to-b bg-clip-text text-2xl font-semibold text-transparent">
+            Ron
+          </span>
         </button>
       )}
       {!disabled && (
         <button
-          className={"rounded bg-white px-1 py-1 text-blue-500"}
+          className={`from-discard-light to-discard-dark w-36 rounded bg-linear-to-r px-1 py-1 ${hasSkipped ? "opacity-50" : "cursor-pointer hover:brightness-120 active:scale-95 active:brightness-120"}`}
           onClick={() => {
             sendMessage({ type: "skip", caller: player });
             setHasSkipped(true);
           }}
           disabled={hasSkipped}
         >
-          Skip
+          <span className="from-discard-text-top bg-linear-to-b to-white bg-clip-text text-2xl font-semibold text-transparent">
+            Skip
+          </span>
         </button>
       )}
     </div>
